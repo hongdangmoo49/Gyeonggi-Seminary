@@ -1,0 +1,81 @@
+:root {
+  /* Primary Colors */
+  --color-navy: #1B2A4A;
+  --color-blue: #2C5F8A;
+  --color-burgundy: #6B2D3E;
+  --color-gold: #C8A96E;
+  --color-gold-light: #D4BC8A;
+
+  /* Neutral Colors */
+  --color-white: #FFFFFF;
+  --color-bg: #F5F5F5;
+  --color-border: #E0E0E0;
+  --color-text: #4A4A4A;
+  --color-text-dark: #2C2C2C;
+  --color-text-light: #7A7A7A;
+
+  /* Semantic Colors */
+  --color-success: #2E7D32;
+  --color-warning: #F57F17;
+  --color-error: #C62828;
+  --color-info: #1565C0;
+
+  /* Typography */
+  --font-kr: 'Noto Sans KR', '맑은 고딕', sans-serif;
+  --font-serif: 'Noto Serif KR', '바탕', serif;
+  --font-en: 'Playfair Display', 'Georgia', serif;
+
+  /* Font Scale */
+  --text-display: 3rem;
+  --text-h1: 2.25rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.375rem;
+  --text-h4: 1.125rem;
+  --text-body: 1rem;
+  --text-sm: 0.875rem;
+  --text-caption: 0.75rem;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 80px;
+
+  /* Layout */
+  --max-width: 1200px;
+  --header-height: 80px;
+  --header-height-mobile: 60px;
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Breakpoints (for reference, used in media queries) */
+  /* --bp-mobile: 768px; */
+  /* --bp-tablet: 1024px; */
+  /* --bp-desktop: 1440px; */
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-display: 2rem;
+    --text-h1: 1.75rem;
+    --text-h2: 1.5rem;
+    --text-h3: 1.25rem;
+    --header-height: 60px;
+    --space-4xl: 48px;
+    --space-3xl: 36px;
+  }
+}
