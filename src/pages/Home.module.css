@@ -110,6 +110,12 @@
   line-height: 1.8;
 }
 
+.aboutHighlight {
+  font-size: var(--text-h4);
+  font-weight: 600;
+  color: var(--color-blue);
+}
+
 .moreLink {
   display: inline-flex;
   align-items: center;

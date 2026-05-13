@@ -51,13 +51,13 @@ export default function Home() {
           <div className={styles.aboutGrid}>
             <div className={styles.aboutText}>
               <h2>경기신학교 소개</h2>
-              <p>
-                경기신학교는 대한예수교장로회 경기총회 산하 평신도 신학교육기관으로,
-                예수 그리스도의 복음을 바탕으로 한 체계적인 신학교육을 제공합니다.
+              <p className={styles.aboutHighlight}>
+                성경적 신학공부를 원하시는 분들은 이곳에서 함께 할 수 있습니다.
               </p>
               <p>
-                성경중심의 교육과정을 통해 교회와 사회에서 헌신할 수 있는
-                평신도 지도자를 양성합니다.
+                경기신학교(평신도신학)에서 도움을 드리겠습니다.
+                대한예수교장로회 신학석·박사인 교수진으로 하여 수업하고 있으며,
+                초교파적으로 학생을 모집합니다. 신학을 하는 이곳에서 시작해 보세요.
               </p>
               <Link to="/about" className={styles.moreLink}>
                 자세히 보기 <MdChevronRight />
@@ -65,20 +65,20 @@ export default function Home() {
             </div>
             <div className={styles.aboutValues}>
               <div className={styles.valueItem}>
-                <strong>성경중심</strong>
-                <span>모든 교육과정은 성경말씀을 중심으로 설계</span>
+                <strong>학부 + 대학원 과정</strong>
+                <span>학부과정과 대학원과정 등을 진행합니다</span>
               </div>
               <div className={styles.valueItem}>
-                <strong>신앙과 학문의 조화</strong>
-                <span>경건한 신앙과 학문적 탁월함을 함께 추구</span>
+                <strong>일산본교 (토요일)</strong>
+                <span>토요일 오전·오후 수업</span>
               </div>
               <div className={styles.valueItem}>
-                <strong>평신도 양성</strong>
-                <span>교회와 사회에서 활동하는 평신도 지도자 양성</span>
+                <strong>서울 분교 (금요일)</strong>
+                <span>금요일 오후 수업 — 편의성과 접근성 고려</span>
               </div>
               <div className={styles.valueItem}>
-                <strong>실천적 신학</strong>
-                <span>이론에 그치지 않고 현장에서 실천할 수 있는 신학</span>
+                <strong>직장인 맞춤형 수업료</strong>
+                <span>직장인들을 위한 합리적인 수업료 구성</span>
               </div>
             </div>
           </div>
