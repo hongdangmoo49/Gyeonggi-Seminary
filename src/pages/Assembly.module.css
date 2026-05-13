@@ -1,0 +1,144 @@
+.block {
+  margin-bottom: var(--space-3xl);
+}
+
+.blockTitle {
+  font-size: var(--text-h2);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.intro {
+  font-size: var(--text-body);
+  line-height: 1.9;
+  max-width: 800px;
+}
+
+/* Vision */
+.visionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.visionCard {
+  padding: var(--space-xl);
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+}
+
+.visionNum {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+}
+
+.visionCard h3 {
+  font-size: var(--text-h4);
+  margin-bottom: var(--space-xs);
+}
+
+.visionCard p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+  .visionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Table */
+.subTitle {
+  font-size: var(--text-h3);
+  color: var(--color-blue);
+  margin: var(--space-xl) 0 var(--space-md);
+}
+
+.table {
+  width: 100%;
+  font-size: var(--text-sm);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-md);
+  background: var(--color-navy);
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.table th:first-child { border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm); }
+.table th:last-child { border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; }
+
+.table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table tr:hover td {
+  background: rgba(44, 95, 138, 0.04);
+}
+
+.table td:first-child {
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+/* Organizations */
+.orgGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.orgCard {
+  padding: var(--space-xl);
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-gold);
+}
+
+.orgCard h3 {
+  font-size: var(--text-h4);
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.orgCard p {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+  .orgGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Scripture */
+.scripture {
+  text-align: center;
+  padding: var(--space-2xl);
+  background: linear-gradient(135deg, var(--color-navy), var(--color-blue));
+  border-radius: var(--border-radius);
+  color: var(--color-white);
+}
+
+.scriptureText {
+  font-family: var(--font-serif);
+  font-size: var(--text-h4);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto var(--space-md);
+}
+
+.scriptureRef {
+  font-size: var(--text-sm);
+  color: var(--color-gold);
+}
