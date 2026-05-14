@@ -82,6 +82,14 @@
   border-radius: var(--border-radius-sm);
 }
 
+.success {
+  font-size: var(--text-sm);
+  color: var(--color-success);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(46, 125, 50, 0.06);
+  border-radius: var(--border-radius-sm);
+}
+
 .submitBtn {
   width: 100%;
   padding: var(--space-md);
@@ -97,15 +105,25 @@
   background: var(--color-navy);
 }
 
-.switch {
-  text-align: center;
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
   font-size: var(--text-sm);
   color: var(--color-text-light);
   margin-top: var(--space-lg);
 }
 
-.switch button {
+.links span {
+  color: var(--color-border);
+}
+
+.links button {
   color: var(--color-blue);
   font-weight: 600;
+}
+
+.links button:hover {
   text-decoration: underline;
 }
