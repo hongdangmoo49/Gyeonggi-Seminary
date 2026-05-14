@@ -1,0 +1,38 @@
+import styles from './PostList.module.css';
+
+export default function PostList({ posts, onSelect }) {
+  return (
+    <div className={styles.list}>
+      <div className={styles.header}>
+        <span className={styles.colNum}>번호</span>
+        <span className={styles.colTitle}>제목</span>
+        <span className={styles.colAuthor}>작성자</span>
+        <span className={styles.colDate}>날짜</span>
+        <span className={styles.colViews}>조회</span>
+      </div>
+      {posts.map((post) => (
+        <div
+          key={post.id}
+          className={`${styles.row} ${post.isNotice ? styles.notice : ''}`}
+          onClick={() => onSelect(post.id)}
+        >
+          <span className={styles.colNum}>
+            {post.isNotice ? '공지' : post.id}
+          </span>
+          <span className={styles.colTitle}>
+            {post.title}
+            {post.comments?.length > 0 && (
+              <span className={styles.commentCount}>[{post.comments.length}]</span>
+            )}
+          </span>
+          <span className={styles.colAuthor}>{post.author}</span>
+          <span className={styles.colDate}>{post.date}</span>
+          <span className={styles.colViews}>{post.views}</span>
+        </div>
+      ))}
+      {posts.length === 0 && (
+        <div className={styles.empty}>게시글이 없습니다.</div>
+      )}
+    </div>
+  );
+}
