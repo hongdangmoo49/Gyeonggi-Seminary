@@ -1,6 +1,6 @@
 import styles from './PostList.module.css';
 
-export default function PostList({ posts, onSelect }) {
+export default function PostList({ posts, onSelect, totalPosts }) {
   return (
     <div className={styles.list}>
       <div className={styles.header}>
@@ -10,14 +10,14 @@ export default function PostList({ posts, onSelect }) {
         <span className={styles.colDate}>날짜</span>
         <span className={styles.colViews}>조회</span>
       </div>
-      {posts.map((post) => (
+      {posts.map((post, index) => (
         <div
           key={post.id}
           className={`${styles.row} ${post.isNotice ? styles.notice : ''}`}
           onClick={() => onSelect(post.id)}
         >
           <span className={styles.colNum}>
-            {post.isNotice ? '공지' : post.id}
+            {post.isNotice ? '공지' : (totalPosts ?? posts.length) - index}
           </span>
           <span className={styles.colTitle}>
             {post.title}

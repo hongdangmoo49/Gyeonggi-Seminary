@@ -112,6 +112,7 @@ export default function usePosts(boardKey) {
     page,
     setPage,
     totalPages,
+    totalPosts: filtered.length,
     addPost,
     updatePost,
     deletePost,

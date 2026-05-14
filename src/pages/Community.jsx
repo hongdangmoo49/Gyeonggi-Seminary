@@ -18,7 +18,7 @@ const TABS = [
 export default function Community() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('notice');
-  const { posts, paged, loading, page, setPage, totalPages, deletePost, addComment } = usePosts(activeTab);
+  const { posts, paged, loading, page, setPage, totalPages, totalPosts, deletePost, addComment } = usePosts(activeTab);
   const [selectedId, setSelectedId] = useState(null);
 
   const selectedPost = selectedId ? posts.find((p) => p.id === selectedId) : null;
@@ -73,7 +73,7 @@ export default function Community() {
             />
           ) : (
             <>
-              <PostList posts={paged} onSelect={handleSelect} />
+              <PostList posts={paged} onSelect={handleSelect} totalPosts={totalPosts} />
               <Pagination current={page} total={totalPages} onChange={setPage} />
             </>
           )}

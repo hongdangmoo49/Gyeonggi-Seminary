@@ -11,7 +11,7 @@ import Pagination from '../components/ui/Pagination';
 import styles from './Board.module.css';
 
 export default function Board() {
-  const { posts, paged, loading, page, setPage, totalPages, addPost, updatePost, deletePost, incrementViews, addComment } = usePosts('free');
+  const { posts, paged, loading, page, setPage, totalPages, totalPosts, addPost, updatePost, deletePost, incrementViews, addComment } = usePosts('free');
   const [search, setSearch] = useState('');
   const { user } = useAuth();
   const [selectedId, setSelectedId] = useState(null);
@@ -101,7 +101,7 @@ export default function Board() {
                   </button>
                 )}
               </div>
-              <PostList posts={filtered} onSelect={handleSelect} />
+              <PostList posts={filtered} onSelect={handleSelect} totalPosts={totalPosts} />
               <Pagination current={page} total={totalPages} onChange={setPage} />
             </>
           )}
