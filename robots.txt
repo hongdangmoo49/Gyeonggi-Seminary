@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hongdangmoo49.github.io/Gyeonggi-Seminary/sitemap.xml
