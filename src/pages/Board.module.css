@@ -1,0 +1,35 @@
+.toolbar {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  margin-bottom: var(--space-lg);
+}
+
+.toolbar > div:first-child {
+  flex: 1;
+}
+
+.writeBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-xl);
+  background: var(--color-blue);
+  color: var(--color-white);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  margin-top: 0;
+  height: 42px;
+}
+
+.writeBtn:hover {
+  background: var(--color-navy);
+}
+
+@media (max-width: 576px) {
+  .toolbar {
+    flex-direction: column;
+  }
+}
