@@ -1,0 +1,113 @@
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: var(--text-sm);
+  min-width: 700px;
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-md);
+  background: var(--color-navy);
+  color: var(--color-white);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.table tr:hover td {
+  background: rgba(44, 95, 138, 0.04);
+}
+
+.categoryBadge {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: var(--text-caption);
+  background: rgba(44, 95, 138, 0.1);
+  color: var(--color-blue);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.lecName {
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+.lecDesc {
+  display: block;
+  font-weight: 400;
+  color: var(--color-text-light);
+  font-size: var(--text-caption);
+  margin-top: var(--space-xs);
+  max-width: 400px;
+}
+
+/* Mobile Cards */
+.cardList {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.card {
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.cardCredits {
+  font-size: var(--text-caption);
+  color: var(--color-text-light);
+}
+
+.cardName {
+  font-size: var(--text-h4);
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.cardDesc {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-sm);
+  line-height: 1.6;
+}
+
+.cardMeta {
+  display: flex;
+  gap: var(--space-lg);
+  font-size: var(--text-caption);
+  color: var(--color-text-light);
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-light);
+  padding: var(--space-2xl);
+}
+
+@media (max-width: 768px) {
+  .tableWrap {
+    display: none;
+  }
+
+  .cardList {
+    display: flex;
+  }
+}
