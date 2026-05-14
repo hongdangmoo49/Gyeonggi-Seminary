@@ -4,13 +4,12 @@ import styles from './PostForm.module.css';
 
 export default function PostForm({ initialData, onSubmit, onBack }) {
   const [title, setTitle] = useState(initialData?.title || '');
-  const [author, setAuthor] = useState(initialData?.author || '');
   const [content, setContent] = useState(initialData?.content || '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !author.trim() || !content.trim()) return;
-    onSubmit({ title, author, content });
+    if (!title.trim() || !content.trim()) return;
+    onSubmit({ title, content });
   };
 
   return (
@@ -28,16 +27,6 @@ export default function PostForm({ initialData, onSubmit, onBack }) {
             placeholder="제목"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className={styles.input}
-            required
-          />
-        </div>
-        <div className={styles.row}>
-          <input
-            type="text"
-            placeholder="작성자"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
             className={styles.input}
             required
           />

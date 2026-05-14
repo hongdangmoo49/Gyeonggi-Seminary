@@ -54,10 +54,11 @@ export default function usePosts(boardKey) {
     return () => unsubscribe();
   }, [boardKey]);
 
-  const addPost = useCallback(async ({ title, author, content, board, isNotice }) => {
+  const addPost = useCallback(async ({ title, author, content, board, isNotice, authorUid }) => {
     await addDoc(postsRef, {
       title,
       author,
+      authorUid: authorUid || '',
       content,
       board,
       isNotice: isNotice || false,

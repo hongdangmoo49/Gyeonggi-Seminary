@@ -27,8 +27,14 @@ export default function Board() {
 
   const selectedPost = selectedId ? posts.find((p) => p.id === selectedId) : null;
 
-  const handleWrite = async ({ title, author, content }) => {
-    await addPost({ title, author, content, board: 'free' });
+  const handleWrite = async ({ title, content }) => {
+    await addPost({
+      title,
+      content,
+      author: user.name || user.email,
+      authorUid: user.uid,
+      board: 'free',
+    });
     setMode('list');
   };
 
@@ -37,13 +43,14 @@ export default function Board() {
     setMode('edit');
   };
 
-  const handleEditSubmit = async ({ title, author, content }) => {
-    await updatePost(editPost.id, { title, author, content });
+  const handleEditSubmit = async ({ title, content }) => {
+    await updatePost(editPost.id, { title, content });
     setEditPost(null);
     setMode('list');
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
     await deletePost(id);
     setSelectedId(null);
     setMode('list');
@@ -85,9 +92,9 @@ export default function Board() {
             <PostDetail
               post={selectedPost}
               onBack={() => { setSelectedId(null); setMode('list'); }}
-              onEdit={user ? (post) => handleEdit(post) : undefined}
-              onDelete={user ? (id) => handleDelete(id) : undefined}
-              onAddComment={user ? addComment : undefined}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onAddComment={addComment}
             />
           )}
 

@@ -1,9 +1,25 @@
+import { useState } from 'react';
 import { MdArrowBack, MdEdit, MdDelete } from 'react-icons/md';
+import useAuth from '../../hooks/useAuth';
 import Comment from './Comment';
 import styles from './PostDetail.module.css';
 
 export default function PostDetail({ post, onBack, onEdit, onDelete, onAddComment }) {
+  const { user } = useAuth();
+  const [commentContent, setCommentContent] = useState('');
+
   if (!post) return null;
+
+  const isAdmin = user?.isAdmin;
+  const isAuthor = user?.uid === post.authorUid;
+  const canEdit = isAdmin || isAuthor;
+  const canDelete = isAdmin;
+
+  const handleAddComment = () => {
+    if (!commentContent.trim() || !user) return;
+    onAddComment(post.id, { author: user.name || user.email, content: commentContent.trim() });
+    setCommentContent('');
+  };
 
   return (
     <div className={styles.detail}>
@@ -12,12 +28,16 @@ export default function PostDetail({ post, onBack, onEdit, onDelete, onAddCommen
           <MdArrowBack /> 목록
         </button>
         <div className={styles.actions}>
-          <button className={styles.editBtn} onClick={() => onEdit(post)}>
-            <MdEdit /> 수정
-          </button>
-          <button className={styles.deleteBtn} onClick={() => onDelete(post.id)}>
-            <MdDelete /> 삭제
-          </button>
+          {canEdit && onEdit && (
+            <button className={styles.editBtn} onClick={() => onEdit(post)}>
+              <MdEdit /> 수정
+            </button>
+          )}
+          {canDelete && onDelete && (
+            <button className={styles.deleteBtn} onClick={() => onDelete(post.id)}>
+              <MdDelete /> 삭제
+            </button>
+          )}
         </div>
       </div>
 
@@ -39,36 +59,23 @@ export default function PostDetail({ post, onBack, onEdit, onDelete, onAddCommen
         {post.comments?.map((c) => (
           <Comment key={c.id} comment={c} />
         ))}
-        <div className={styles.commentForm}>
-          <input
-            type="text"
-            placeholder="작성자"
-            className={styles.commentInput}
-            id="comment-author"
-          />
-          <div className={styles.commentRow}>
-            <input
-              type="text"
-              placeholder="댓글을 입력하세요"
-              className={styles.commentInput}
-              id="comment-content"
-            />
-            <button
-              className={styles.commentSubmit}
-              onClick={() => {
-                const author = document.getElementById('comment-author').value.trim();
-                const content = document.getElementById('comment-content').value.trim();
-                if (author && content) {
-                  onAddComment(post.id, { author, content });
-                  document.getElementById('comment-author').value = '';
-                  document.getElementById('comment-content').value = '';
-                }
-              }}
-            >
-              등록
-            </button>
+        {user && onAddComment && (
+          <div className={styles.commentForm}>
+            <div className={styles.commentRow}>
+              <input
+                type="text"
+                placeholder="댓글을 입력하세요"
+                value={commentContent}
+                onChange={(e) => setCommentContent(e.target.value)}
+                className={styles.commentInput}
+                onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
+              />
+              <button className={styles.commentSubmit} onClick={handleAddComment}>
+                등록
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

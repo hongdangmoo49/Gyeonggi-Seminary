@@ -25,6 +25,7 @@ export default function Community() {
 
   const handleDelete = async () => {
     if (!selectedId) return;
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
     await deletePost(selectedId);
     setSelectedId(null);
   };
@@ -68,8 +69,8 @@ export default function Community() {
               post={selectedPost}
               onBack={() => setSelectedId(null)}
               onEdit={undefined}
-              onDelete={user ? handleDelete : undefined}
-              onAddComment={user ? addComment : undefined}
+              onDelete={handleDelete}
+              onAddComment={addComment}
             />
           ) : (
             <>
