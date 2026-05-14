@@ -1,0 +1,122 @@
+.title {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--space-xl);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  flex: 1;
+  max-width: 400px;
+}
+
+.search input {
+  border: none;
+  outline: none;
+  font-size: var(--text-sm);
+  width: 100%;
+  background: none;
+}
+
+.select {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--text-sm);
+  background: var(--color-white);
+  cursor: pointer;
+}
+
+.count {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+  background: var(--color-bg);
+  font-weight: 600;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+.postTitle {
+  font-weight: 500;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toggleBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-light);
+  padding: 2px;
+}
+
+.active {
+  color: var(--color-gold);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-error);
+  padding: var(--space-xs);
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-fast);
+}
+
+.deleteBtn:hover {
+  background: rgba(198, 40, 40, 0.08);
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-light);
+  padding: var(--space-xl) !important;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: var(--text-caption);
+  }
+  .table th,
+  .table td {
+    padding: var(--space-xs) var(--space-sm);
+  }
+}

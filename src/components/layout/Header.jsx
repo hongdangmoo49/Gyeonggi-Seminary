@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MdMenu, MdClose, MdChevronRight, MdLogin, MdLogout, MdPerson } from 'react-icons/md';
+import { MdMenu, MdClose, MdChevronRight, MdLogin, MdLogout, MdPerson, MdAdminPanelSettings } from 'react-icons/md';
 import navigation from '../../data/navigation';
 import useAuth from '../../hooks/useAuth';
 import LoginModal from '../ui/LoginModal';
@@ -11,6 +11,7 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const { user, logout } = useAuth();
+  const isAdmin = user?.isAdmin;
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
@@ -30,6 +31,11 @@ export default function Header() {
                 <div className={styles.userInfo}>
                   <MdPerson />
                   <span className={styles.userName}>{user.name}</span>
+                  {isAdmin && (
+                    <Link to="/admin" className={styles.adminLink} title="관리자 페이지">
+                      <MdAdminPanelSettings />
+                    </Link>
+                  )}
                   <button className={styles.logoutBtn} onClick={() => logout()}>로그아웃</button>
                 </div>
               ) : (
@@ -112,6 +118,11 @@ export default function Header() {
               {user ? (
                 <div className={styles.mobileUserInfo}>
                   <MdPerson /> {user.name}님
+                  {isAdmin && (
+                    <Link to="/admin" onClick={() => setMobileOpen(false)}>
+                      <MdAdminPanelSettings /> 관리자
+                    </Link>
+                  )}
                   <button onClick={async () => { await logout(); setMobileOpen(false); }}>
                     <MdLogout /> 로그아웃
                   </button>

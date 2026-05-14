@@ -102,6 +102,19 @@
   color: var(--color-white);
 }
 
+.adminLink {
+  display: flex;
+  align-items: center;
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  padding: 2px;
+  transition: var(--transition-fast);
+}
+
+.adminLink:hover {
+  color: var(--color-gold-light);
+}
+
 /* Mobile auth */
 .mobileAuth {
   display: none;

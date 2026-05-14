@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './hooks/useAuth';
 import Layout from './components/layout/Layout';
+import AdminGuard from './components/admin/AdminGuard';
+import AdminLayout from './components/admin/AdminLayout';
 import Home from './pages/Home';
 import About from './pages/About';
 import Greeting from './pages/Greeting';
@@ -12,6 +14,11 @@ import DocumentLibrary from './pages/DocumentLibrary';
 import Community from './pages/Community';
 import Board from './pages/Board';
 import Assembly from './pages/Assembly';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminPosts from './pages/admin/AdminPosts';
+import AdminVideos from './pages/admin/AdminVideos';
+import AdminDocuments from './pages/admin/AdminDocuments';
 
 export default function App() {
   return (
@@ -30,6 +37,21 @@ export default function App() {
             <Route path="community" element={<Community />} />
             <Route path="board" element={<Board />} />
             <Route path="assembly" element={<Assembly />} />
+          </Route>
+
+          <Route
+            path="/admin"
+            element={
+              <AdminGuard>
+                <AdminLayout />
+              </AdminGuard>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="posts" element={<AdminPosts />} />
+            <Route path="videos" element={<AdminVideos />} />
+            <Route path="documents" element={<AdminDocuments />} />
           </Route>
         </Routes>
       </AuthProvider>
