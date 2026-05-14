@@ -6,33 +6,43 @@ import styles from './LoginModal.module.css';
 export default function LoginModal({ onClose }) {
   const { login, register } = useAuth();
   const [mode, setMode] = useState('login');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSubmitting(true);
 
-    if (mode === 'login') {
-      const result = login(username, password);
-      if (result.success) {
-        onClose();
+    try {
+      if (mode === 'login') {
+        const result = await login(email, password);
+        if (result.success) {
+          onClose();
+        } else {
+          setError(result.message);
+        }
       } else {
-        setError(result.message);
+        if (!name.trim()) {
+          setError('이름을 입력해주세요.');
+          return;
+        }
+        if (password.length < 6) {
+          setError('비밀번호는 6자 이상이어야 합니다.');
+          return;
+        }
+        const result = await register(email, password, name);
+        if (result.success) {
+          onClose();
+        } else {
+          setError(result.message);
+        }
       }
-    } else {
-      if (!name.trim()) {
-        setError('이름을 입력해주세요.');
-        return;
-      }
-      const result = register(username, password, name);
-      if (result.success) {
-        onClose();
-      } else {
-        setError(result.message);
-      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -65,26 +75,27 @@ export default function LoginModal({ onClose }) {
             />
           )}
           <input
-            type="text"
-            placeholder="아이디"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={styles.input}
             required
           />
           <input
             type="password"
-            placeholder="비밀번호"
+            placeholder={mode === 'register' ? '비밀번호 (6자 이상)' : '비밀번호'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
             required
+            minLength={6}
           />
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" className={styles.submitBtn}>
-            {mode === 'login' ? '로그인' : '회원가입'}
+          <button type="submit" className={styles.submitBtn} disabled={submitting}>
+            {submitting ? '처리 중...' : mode === 'login' ? '로그인' : '회원가입'}
           </button>
         </form>
 

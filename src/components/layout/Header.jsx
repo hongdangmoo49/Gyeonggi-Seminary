@@ -30,7 +30,7 @@ export default function Header() {
                 <div className={styles.userInfo}>
                   <MdPerson />
                   <span className={styles.userName}>{user.name}</span>
-                  <button className={styles.logoutBtn} onClick={logout}>로그아웃</button>
+                  <button className={styles.logoutBtn} onClick={() => logout()}>로그아웃</button>
                 </div>
               ) : (
                 <button className={styles.loginBtn} onClick={() => setShowLogin(true)}>
@@ -112,7 +112,7 @@ export default function Header() {
               {user ? (
                 <div className={styles.mobileUserInfo}>
                   <MdPerson /> {user.name}님
-                  <button onClick={() => { logout(); setMobileOpen(false); }}>
+                  <button onClick={async () => { await logout(); setMobileOpen(false); }}>
                     <MdLogout /> 로그아웃
                   </button>
                 </div>
