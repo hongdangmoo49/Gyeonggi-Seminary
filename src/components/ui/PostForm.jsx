@@ -1,15 +1,24 @@
 import { useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
+import { validateInput } from '../../utils/validation';
 import styles from './PostForm.module.css';
 
 export default function PostForm({ initialData, onSubmit, onBack }) {
   const [title, setTitle] = useState(initialData?.title || '');
   const [content, setContent] = useState(initialData?.content || '');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) return;
-    onSubmit({ title, content });
+    setError('');
+
+    const titleError = validateInput(title, { min: 2, max: 100, label: '제목' });
+    if (titleError) { setError(titleError); return; }
+
+    const contentError = validateInput(content, { min: 5, max: 10000, label: '내용' });
+    if (contentError) { setError(contentError); return; }
+
+    onSubmit({ title: title.trim(), content: content.trim() });
   };
 
   return (
@@ -24,16 +33,17 @@ export default function PostForm({ initialData, onSubmit, onBack }) {
         <div className={styles.row}>
           <input
             type="text"
-            placeholder="제목"
+            placeholder="제목 (2~100자)"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className={styles.input}
             required
+            maxLength={100}
           />
         </div>
         <div className={styles.row}>
           <textarea
-            placeholder="내용을 입력하세요"
+            placeholder="내용을 입력하세요 (5~10000자)"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className={styles.textarea}
@@ -41,6 +51,7 @@ export default function PostForm({ initialData, onSubmit, onBack }) {
             required
           />
         </div>
+        {error && <p className={styles.error}>{error}</p>}
         <div className={styles.actions}>
           <button type="button" className={styles.cancelBtn} onClick={onBack}>취소</button>
           <button type="submit" className={styles.submitBtn}>

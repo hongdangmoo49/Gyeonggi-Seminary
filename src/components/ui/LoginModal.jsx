@@ -44,8 +44,12 @@ export default function LoginModal({ onClose }) {
           setError(result.message);
         }
       } else {
-        if (!name.trim()) {
-          setError('이름을 입력해주세요.');
+        if (!name.trim() || name.trim().length < 2) {
+          setError('이름은 2자 이상 입력해주세요.');
+          return;
+        }
+        if (name.trim().length > 20) {
+          setError('이름은 20자 이하로 입력해주세요.');
           return;
         }
         if (password.length < 6) {
@@ -80,11 +84,13 @@ export default function LoginModal({ onClose }) {
           {mode === 'register' && (
             <input
               type="text"
-              placeholder="이름"
+              placeholder="이름 (2~20자)"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
               required
+              minLength={2}
+              maxLength={20}
             />
           )}
           <input

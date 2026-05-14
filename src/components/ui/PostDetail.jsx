@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { MdArrowBack, MdEdit, MdDelete } from 'react-icons/md';
 import useAuth from '../../hooks/useAuth';
+import { validateInput } from '../../utils/validation';
 import Comment from './Comment';
 import styles from './PostDetail.module.css';
 
 export default function PostDetail({ post, onBack, onEdit, onDelete, onAddComment }) {
   const { user } = useAuth();
   const [commentContent, setCommentContent] = useState('');
+  const [commentError, setCommentError] = useState('');
 
   if (!post) return null;
 
@@ -16,7 +18,9 @@ export default function PostDetail({ post, onBack, onEdit, onDelete, onAddCommen
   const canDelete = isAdmin;
 
   const handleAddComment = () => {
-    if (!commentContent.trim() || !user) return;
+    setCommentError('');
+    const error = validateInput(commentContent, { min: 1, max: 500, label: '댓글' });
+    if (error) { setCommentError(error); return; }
     onAddComment(post.id, { author: user.name || user.email, content: commentContent.trim() });
     setCommentContent('');
   };
@@ -64,16 +68,18 @@ export default function PostDetail({ post, onBack, onEdit, onDelete, onAddCommen
             <div className={styles.commentRow}>
               <input
                 type="text"
-                placeholder="댓글을 입력하세요"
+                placeholder="댓글을 입력하세요 (최대 500자)"
                 value={commentContent}
-                onChange={(e) => setCommentContent(e.target.value)}
+                onChange={(e) => { setCommentContent(e.target.value); setCommentError(''); }}
                 className={styles.commentInput}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
+                maxLength={500}
               />
               <button className={styles.commentSubmit} onClick={handleAddComment}>
                 등록
               </button>
             </div>
+            {commentError && <p className={styles.commentError}>{commentError}</p>}
           </div>
         )}
       </div>

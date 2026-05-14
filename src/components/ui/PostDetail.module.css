@@ -138,6 +138,11 @@
   background: var(--color-navy);
 }
 
+.commentError {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+}
+
 @media (max-width: 576px) {
   .actions {
     gap: var(--space-xs);

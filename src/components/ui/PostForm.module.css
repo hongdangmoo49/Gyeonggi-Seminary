@@ -82,3 +82,12 @@
 .submitBtn:hover {
   background: var(--color-navy);
 }
+
+.error {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(198, 40, 40, 0.06);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--space-md);
+}
