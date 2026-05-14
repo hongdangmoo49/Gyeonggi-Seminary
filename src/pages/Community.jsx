@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useAuth from '../hooks/useAuth';
 import PageBanner from '../components/ui/PageBanner';
 import PostList from '../components/ui/PostList';
 import PostDetail from '../components/ui/PostDetail';
@@ -19,6 +20,7 @@ const PER_PAGE = 5;
 
 export default function Community() {
   const [posts, setPosts] = useLocalStorage('community-posts', initialPosts);
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('notice');
   const [selectedId, setSelectedId] = useState(null);
   const [page, setPage] = useState(1);
@@ -67,11 +69,11 @@ export default function Community() {
               post={selectedPost}
               onBack={() => setSelectedId(null)}
               onEdit={() => {}}
-              onDelete={() => {
+              onDelete={user ? () => {
                 setPosts(posts.filter((p) => p.id !== selectedId));
                 setSelectedId(null);
-              }}
-              onAddComment={handleAddComment}
+              } : undefined}
+              onAddComment={user ? handleAddComment : undefined}
             />
           ) : (
             <>

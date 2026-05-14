@@ -49,6 +49,97 @@
   z-index: 1001;
 }
 
+/* Right area */
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Auth */
+.authArea {
+  display: flex;
+  align-items: center;
+}
+
+.loginBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-sm);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.loginBtn:hover {
+  color: var(--color-white);
+  border-color: var(--color-white);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-sm);
+}
+
+.userName {
+  color: var(--color-gold);
+  font-weight: 500;
+}
+
+.logoutBtn {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.6);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.logoutBtn:hover {
+  color: var(--color-white);
+}
+
+/* Mobile auth */
+.mobileAuth {
+  display: none;
+}
+
+.mobileUserInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--space-lg);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-sm);
+}
+
+.mobileUserInfo button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--text-sm);
+}
+
+.mobileLoginBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
+  color: var(--color-gold);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--space-lg);
+  width: 100%;
+}
+
 /* Navigation */
 .nav {
   display: flex;
@@ -207,5 +298,13 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
+  }
+
+  .authArea {
+    display: none;
+  }
+
+  .mobileAuth {
+    display: block;
   }
 }

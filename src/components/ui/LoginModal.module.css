@@ -1,0 +1,111 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  padding: var(--space-2xl);
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.closeBtn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  font-size: 1.5rem;
+  color: var(--color-text-light);
+}
+
+.closeBtn:hover {
+  color: var(--color-text);
+}
+
+.title {
+  font-size: var(--text-h2);
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xl);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--text-body);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(44, 95, 138, 0.1);
+}
+
+.error {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(198, 40, 40, 0.06);
+  border-radius: var(--border-radius-sm);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: var(--space-md);
+  background: var(--color-blue);
+  color: var(--color-white);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--text-body);
+  font-weight: 600;
+  margin-top: var(--space-sm);
+}
+
+.submitBtn:hover {
+  background: var(--color-navy);
+}
+
+.switch {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin-top: var(--space-lg);
+}
+
+.switch button {
+  color: var(--color-blue);
+  font-weight: 600;
+  text-decoration: underline;
+}

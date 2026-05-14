@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MdCreate } from 'react-icons/md';
+import useAuth from '../hooks/useAuth';
 import PageBanner from '../components/ui/PageBanner';
 import PostList from '../components/ui/PostList';
 import PostDetail from '../components/ui/PostDetail';
@@ -15,6 +16,7 @@ const PER_PAGE = 5;
 export default function Board() {
   const [posts, setPosts] = useLocalStorage('board-posts', initialPosts.filter((p) => p.board === 'free'));
   const [search, setSearch] = useState('');
+  const { user } = useAuth();
   const [page, setPage] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
   const [mode, setMode] = useState('list'); // list | detail | write | edit
@@ -97,9 +99,9 @@ export default function Board() {
             <PostDetail
               post={selectedPost}
               onBack={() => { setSelectedId(null); setMode('list'); }}
-              onEdit={(post) => handleEdit(post)}
-              onDelete={(id) => handleDelete(id)}
-              onAddComment={handleAddComment}
+              onEdit={user ? (post) => handleEdit(post) : undefined}
+              onDelete={user ? (id) => handleDelete(id) : undefined}
+              onAddComment={user ? handleAddComment : undefined}
             />
           )}
 
@@ -107,9 +109,11 @@ export default function Board() {
             <>
               <div className={styles.toolbar}>
                 <SearchBar value={search} onChange={(v) => { setSearch(v); setPage(1); }} placeholder="제목 또는 내용으로 검색" />
-                <button className={styles.writeBtn} onClick={() => setMode('write')}>
-                  <MdCreate /> 글쓰기
-                </button>
+                {user && (
+                  <button className={styles.writeBtn} onClick={() => setMode('write')}>
+                    <MdCreate /> 글쓰기
+                  </button>
+                )}
               </div>
               <PostList
                 posts={paged}
