@@ -64,9 +64,6 @@
 .name {
   font-weight: 600;
   color: var(--color-text-dark);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
 }
 
 .superIcon {
