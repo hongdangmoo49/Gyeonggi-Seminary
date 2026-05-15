@@ -157,6 +157,8 @@
 .nav {
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
 .menu {
@@ -256,6 +258,9 @@
     transition: right var(--transition-base);
     overflow-y: auto;
     z-index: 1000;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 
   .navOpen {
