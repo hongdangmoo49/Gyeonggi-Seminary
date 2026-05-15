@@ -18,6 +18,7 @@ import Assembly from './pages/Assembly';
 import NotFound from './pages/NotFound';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminAdmins from './pages/admin/AdminAdmins';
 import AdminPosts from './pages/admin/AdminPosts';
 import AdminVideos from './pages/admin/AdminVideos';
 import AdminDocuments from './pages/admin/AdminDocuments';
@@ -52,6 +53,7 @@ export default function App() {
               }
             >
               <Route index element={<AdminDashboard />} />
+              <Route path="admins" element={<AdminAdmins />} />
               <Route path="users" element={<AdminUsers />} />
               <Route path="posts" element={<AdminPosts />} />
               <Route path="videos" element={<AdminVideos />} />

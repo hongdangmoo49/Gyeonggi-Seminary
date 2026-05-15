@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { MdDashboard, MdPeople, MdArticle, MdVideoLibrary, MdDescription, MdLogout, MdMenu, MdClose } from 'react-icons/md';
+import { MdDashboard, MdPeople, MdArticle, MdVideoLibrary, MdDescription, MdLogout, MdMenu, MdClose, MdShield } from 'react-icons/md';
 import useAuth from '../../hooks/useAuth';
 import styles from './AdminLayout.module.css';
 
 const NAV = [
   { to: '/admin', icon: MdDashboard, label: '대시보드', end: true },
+  { to: '/admin/admins', icon: MdShield, label: '관리자 목록' },
   { to: '/admin/users', icon: MdPeople, label: '회원 관리' },
   { to: '/admin/posts', icon: MdArticle, label: '게시글 관리' },
   { to: '/admin/videos', icon: MdVideoLibrary, label: '동영상 관리' },
@@ -50,7 +51,7 @@ export default function AdminLayout() {
         <div className={styles.sidebarFooter}>
           <div className={styles.userInfo}>
             <span className={styles.userName}>{user?.name || user?.email}</span>
-            <span className={styles.userRole}>관리자</span>
+            <span className={styles.userRole}>{user?.isSuperAdmin ? '최고관리자' : '관리자'}</span>
           </div>
           <button className={styles.logoutBtn} onClick={handleLogout}>
             <MdLogout /> 로그아웃

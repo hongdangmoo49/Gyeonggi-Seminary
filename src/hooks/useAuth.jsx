@@ -19,11 +19,15 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+        const data = userDoc.exists() ? userDoc.data() : {};
+        const role = data.role || 'user';
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
-          name: firebaseUser.displayName || (userDoc.exists() ? userDoc.data().name : ''),
-          isAdmin: userDoc.exists() ? userDoc.data().isAdmin || false : false,
+          name: firebaseUser.displayName || data.name || '',
+          role,
+          isAdmin: role === 'admin' || role === 'superAdmin',
+          isSuperAdmin: role === 'superAdmin',
         });
       } else {
         setUser(null);
@@ -57,7 +61,7 @@ export function AuthProvider({ children }) {
       await setDoc(doc(db, 'users', credential.user.uid), {
         name,
         email,
-        isAdmin: false,
+        role: 'user',
         createdAt: new Date().toISOString(),
       });
       return { success: true };

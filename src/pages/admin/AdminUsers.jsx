@@ -1,13 +1,23 @@
 import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { MdSearch, MdDelete, MdToggleOn, MdToggleOff } from 'react-icons/md';
+import useAuth from '../../hooks/useAuth';
+import { MdSearch, MdDelete, MdShield } from 'react-icons/md';
 import styles from './AdminUsers.module.css';
 
+const ROLE_LABELS = {
+  superAdmin: '최고관리자',
+  admin: '관리자',
+  user: '일반',
+};
+
 export default function AdminUsers() {
+  const { user: me } = useAuth();
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const isSuperAdmin = me?.isSuperAdmin;
 
   useEffect(() => {
     async function fetchUsers() {
@@ -18,12 +28,17 @@ export default function AdminUsers() {
     fetchUsers();
   }, []);
 
-  const toggleAdmin = async (userId, currentAdmin) => {
-    await updateDoc(doc(db, 'users', userId), { isAdmin: !currentAdmin });
-    setUsers(users.map((u) => u.id === userId ? { ...u, isAdmin: !currentAdmin } : u));
+  const setRole = async (userId, newRole) => {
+    await updateDoc(doc(db, 'users', userId), { role: newRole });
+    setUsers(users.map((u) => u.id === userId ? { ...u, role: newRole } : u));
   };
 
   const handleDelete = async (userId) => {
+    const target = users.find((u) => u.id === userId);
+    if (target?.role === 'superAdmin') {
+      alert('최고관리자는 삭제할 수 없습니다.');
+      return;
+    }
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     await deleteDoc(doc(db, 'users', userId));
     setUsers(users.filter((u) => u.id !== userId));
@@ -59,35 +74,62 @@ export default function AdminUsers() {
           <tr>
             <th>이름</th>
             <th>이메일</th>
+            <th>역할</th>
             <th>가입일</th>
-            <th>관리자</th>
-            <th>관리</th>
+            {isSuperAdmin && <th>관리</th>}
           </tr>
         </thead>
         <tbody>
-          {filtered.map((u) => (
-            <tr key={u.id}>
-              <td className={styles.name}>{u.name || '-'}</td>
-              <td>{u.email}</td>
-              <td>{u.createdAt?.slice(0, 10) || '-'}</td>
-              <td>
-                <button
-                  className={`${styles.toggleBtn} ${u.isAdmin ? styles.active : ''}`}
-                  onClick={() => toggleAdmin(u.id, u.isAdmin)}
-                >
-                  {u.isAdmin ? <MdToggleOn size={24} /> : <MdToggleOff size={24} />}
-                  {u.isAdmin ? '관리자' : '일반'}
-                </button>
-              </td>
-              <td>
-                <button className={styles.deleteBtn} onClick={() => handleDelete(u.id)}>
-                  <MdDelete size={18} />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {filtered.map((u) => {
+            const role = u.role || (u.isAdmin ? 'admin' : 'user');
+            return (
+              <tr key={u.id}>
+                <td className={styles.name}>
+                  {u.name || '-'}
+                  {role === 'superAdmin' && <MdShield className={styles.superIcon} />}
+                </td>
+                <td>{u.email}</td>
+                <td>
+                  <span className={`${styles.badge} ${styles[role]}`}>
+                    {ROLE_LABELS[role]}
+                  </span>
+                </td>
+                <td>{u.createdAt?.slice(0, 10) || '-'}</td>
+                {isSuperAdmin && (
+                  <td>
+                    {u.id !== me.uid && role !== 'superAdmin' && (
+                      <div className={styles.actions}>
+                        {role === 'user' && (
+                          <button
+                            className={styles.promoteBtn}
+                            onClick={() => setRole(u.id, 'admin')}
+                          >
+                            관리자 임명
+                          </button>
+                        )}
+                        {role === 'admin' && (
+                          <button
+                            className={styles.demoteBtn}
+                            onClick={() => setRole(u.id, 'user')}
+                          >
+                            관리자 해제
+                          </button>
+                        )}
+                        <button className={styles.deleteBtn} onClick={() => handleDelete(u.id)}>
+                          <MdDelete size={18} />
+                        </button>
+                      </div>
+                    )}
+                    {u.id === me.uid && (
+                      <span className={styles.self}>본인</span>
+                    )}
+                  </td>
+                )}
+              </tr>
+            );
+          })}
           {filtered.length === 0 && (
-            <tr><td colSpan={5} className={styles.empty}>회원이 없습니다.</td></tr>
+            <tr><td colSpan={isSuperAdmin ? 5 : 4} className={styles.empty}>회원이 없습니다.</td></tr>
           )}
         </tbody>
       </table>
