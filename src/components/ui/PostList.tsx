@@ -1,4 +1,5 @@
 import type { PostListProps } from '../../types';
+import EmptyState from './EmptyState';
 import styles from './PostList.module.css';
 
 export default function PostList({ posts, onSelect, totalPosts }: PostListProps) {
@@ -32,7 +33,11 @@ export default function PostList({ posts, onSelect, totalPosts }: PostListProps)
         </div>
       ))}
       {posts.length === 0 && (
-        <div className={styles.empty}>게시글이 없습니다.</div>
+        <EmptyState
+          icon="📭"
+          title="게시글이 없습니다"
+          description="첫 번째 글을 작성해보세요."
+        />
       )}
     </div>
   );

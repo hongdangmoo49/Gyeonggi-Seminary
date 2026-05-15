@@ -3,6 +3,7 @@ import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firesto
 import { db } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { MdSearch, MdDelete, MdShield } from 'react-icons/md';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import type { Role } from '../../types';
 import styles from './AdminUsers.module.css';
 
@@ -60,7 +61,7 @@ export default function AdminUsers() {
     u.email?.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (loading) return <p>불러오는 중...</p>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>

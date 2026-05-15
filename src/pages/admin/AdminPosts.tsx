@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { MdSearch, MdDelete, MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import type { BoardKey } from '../../types';
 import styles from './AdminPosts.module.css';
 
@@ -65,7 +66,7 @@ export default function AdminPosts() {
     return matchBoard && matchSearch;
   });
 
-  if (loading) return <p>불러오는 중...</p>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>

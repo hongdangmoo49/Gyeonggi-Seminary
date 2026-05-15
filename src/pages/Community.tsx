@@ -5,6 +5,7 @@ import PageBanner from '../components/ui/PageBanner';
 import PostList from '../components/ui/PostList';
 import PostDetail from '../components/ui/PostDetail';
 import Pagination from '../components/ui/Pagination';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import styles from './Community.module.css';
 
 const TABS = [
@@ -40,7 +41,7 @@ export default function Community() {
         <PageBanner title="커뮤니티" en="Community" />
         <section className="section">
           <div className="container">
-            <p style={{ textAlign: 'center', padding: '2rem' }}>불러오는 중...</p>
+            <LoadingSpinner />
           </div>
         </section>
       </>

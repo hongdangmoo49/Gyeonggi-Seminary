@@ -26,3 +26,25 @@
   border-bottom-color: var(--color-blue);
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .tabs {
+    gap: 0;
+  }
+
+  .tabBtn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--text-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabBtn {
+    padding: var(--space-sm) var(--space-sm);
+    font-size: var(--text-caption);
+  }
+}

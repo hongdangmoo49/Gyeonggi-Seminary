@@ -22,3 +22,27 @@
   color: var(--color-gold);
   margin-top: var(--space-xs);
 }
+
+@media (max-width: 768px) {
+  .banner {
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .title {
+    font-size: var(--text-h2);
+  }
+
+  .subtitle {
+    font-size: var(--text-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .title {
+    font-size: var(--text-h3);
+  }
+}

@@ -204,17 +204,6 @@
   animation: slideDown 0.25s ease;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .dropdownLink {
   display: block;
   padding: var(--space-sm) var(--space-lg);

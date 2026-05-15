@@ -8,6 +8,7 @@ import PostDetail from '../components/ui/PostDetail';
 import PostForm from '../components/ui/PostForm';
 import SearchBar from '../components/ui/SearchBar';
 import Pagination from '../components/ui/Pagination';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import type { Post } from '../types';
 import styles from './Board.module.css';
 
@@ -69,7 +70,7 @@ export default function Board() {
         <PageBanner title="자유게시판" en="Free Board" />
         <section className="section">
           <div className="container">
-            <p style={{ textAlign: 'center', padding: '2rem' }}>불러오는 중...</p>
+            <LoadingSpinner />
           </div>
         </section>
       </>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { MdShield } from 'react-icons/md';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import type { Role } from '../../types';
 import styles from './AdminAdmins.module.css';
 
@@ -35,7 +36,7 @@ export default function AdminAdmins() {
     fetchAdmins();
   }, []);
 
-  if (loading) return <p>불러오는 중...</p>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>
