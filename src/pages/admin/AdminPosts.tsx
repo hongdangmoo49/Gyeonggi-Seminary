@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { MdSearch, MdDelete, MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import { useConfirm } from '../../hooks/useConfirm';
+import { toast } from '../../hooks/useToast';
+import { SkeletonList } from '../../components/ui/Skeleton';
 import type { BoardKey } from '../../types';
 import styles from './AdminPosts.module.css';
 
@@ -31,6 +33,7 @@ export default function AdminPosts() {
   const [search, setSearch] = useState('');
   const [boardFilter, setBoardFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const { confirm, dialog } = useConfirm();
 
   useEffect(() => {
     async function fetchPosts() {
@@ -48,9 +51,11 @@ export default function AdminPosts() {
   }, []);
 
   const handleDelete = async (postId: string) => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+    const ok = await confirm('정말 삭제하시겠습니까?');
+    if (!ok) return;
     await deleteDoc(doc(db, 'posts', postId));
     setPosts(posts.filter((p) => p.id !== postId));
+    toast.success('게시글이 삭제되었습니다.');
   };
 
   const toggleNotice = async (postId: string, current: boolean) => {
@@ -66,7 +71,7 @@ export default function AdminPosts() {
     return matchBoard && matchSearch;
   });
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <SkeletonList rows={6} />;
 
   return (
     <div>
@@ -137,6 +142,7 @@ export default function AdminPosts() {
           )}
         </tbody>
       </table>
+      {dialog}
     </div>
   );
 }

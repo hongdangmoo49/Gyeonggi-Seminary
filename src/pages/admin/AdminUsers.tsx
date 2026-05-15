@@ -3,7 +3,9 @@ import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firesto
 import { db } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { MdSearch, MdDelete, MdShield } from 'react-icons/md';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import { useConfirm } from '../../hooks/useConfirm';
+import { toast } from '../../hooks/useToast';
+import { SkeletonList } from '../../components/ui/Skeleton';
 import type { Role } from '../../types';
 import styles from './AdminUsers.module.css';
 
@@ -27,6 +29,7 @@ export default function AdminUsers() {
   const [users, setUsers] = useState<UserData[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const { confirm, dialog } = useConfirm();
 
   const isSuperAdmin = me?.isSuperAdmin;
 
@@ -42,17 +45,20 @@ export default function AdminUsers() {
   const setRole = async (userId: string, newRole: Role) => {
     await updateDoc(doc(db, 'users', userId), { role: newRole });
     setUsers(users.map((u) => u.id === userId ? { ...u, role: newRole } : u));
+    toast.success(newRole === 'admin' ? '관리자로 임명되었습니다.' : '관리자 권한이 해제되었습니다.');
   };
 
   const handleDelete = async (userId: string) => {
     const target = users.find((u) => u.id === userId);
     if (target?.role === 'superAdmin') {
-      alert('최고관리자는 삭제할 수 없습니다.');
+      toast.error('최고관리자는 삭제할 수 없습니다.');
       return;
     }
-    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+    const ok = await confirm('정말 삭제하시겠습니까?');
+    if (!ok) return;
     await deleteDoc(doc(db, 'users', userId));
     setUsers(users.filter((u) => u.id !== userId));
+    toast.success('회원이 삭제되었습니다.');
   };
 
   const filtered = users.filter((u) =>
@@ -61,7 +67,7 @@ export default function AdminUsers() {
     u.email?.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <SkeletonList rows={6} />;
 
   return (
     <div>
@@ -144,6 +150,7 @@ export default function AdminUsers() {
           )}
         </tbody>
       </table>
+      {dialog}
     </div>
   );
 }

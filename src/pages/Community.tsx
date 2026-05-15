@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import usePosts from '../hooks/usePosts';
+import { useConfirm } from '../hooks/useConfirm';
+import { toast } from '../hooks/useToast';
 import PageBanner from '../components/ui/PageBanner';
 import PostList from '../components/ui/PostList';
 import PostDetail from '../components/ui/PostDetail';
 import Pagination from '../components/ui/Pagination';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { SkeletonList } from '../components/ui/Skeleton';
 import styles from './Community.module.css';
 
 const TABS = [
@@ -21,13 +23,16 @@ export default function Community() {
   const [activeTab, setActiveTab] = useState('notice');
   const { posts, paged, loading, page, setPage, totalPages, totalPosts, deletePost, addComment } = usePosts(activeTab);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { confirm, dialog } = useConfirm();
 
   const selectedPost = selectedId ? posts.find((p) => p.id === selectedId) : null;
 
   const handleDelete = async () => {
     if (!selectedId) return;
-    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+    const ok = await confirm('정말 삭제하시겠습니까?');
+    if (!ok) return;
     await deletePost(selectedId);
+    toast.success('게시글이 삭제되었습니다.');
     setSelectedId(null);
   };
 
@@ -41,7 +46,7 @@ export default function Community() {
         <PageBanner title="커뮤니티" en="Community" />
         <section className="section">
           <div className="container">
-            <LoadingSpinner />
+            <SkeletonList rows={5} />
           </div>
         </section>
       </>
@@ -81,6 +86,7 @@ export default function Community() {
           )}
         </div>
       </section>
+      {dialog}
     </>
   );
 }

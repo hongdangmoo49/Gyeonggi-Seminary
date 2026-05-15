@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { MdCreate } from 'react-icons/md';
 import useAuth from '../hooks/useAuth';
 import usePosts from '../hooks/usePosts';
+import { useConfirm } from '../hooks/useConfirm';
+import { toast } from '../hooks/useToast';
 import PageBanner from '../components/ui/PageBanner';
 import PostList from '../components/ui/PostList';
 import PostDetail from '../components/ui/PostDetail';
 import PostForm from '../components/ui/PostForm';
 import SearchBar from '../components/ui/SearchBar';
 import Pagination from '../components/ui/Pagination';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { SkeletonList } from '../components/ui/Skeleton';
 import type { Post } from '../types';
 import styles from './Board.module.css';
 
@@ -19,6 +21,7 @@ export default function Board() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [mode, setMode] = useState<'list' | 'detail' | 'write' | 'edit'>('list');
   const [editPost, setEditPost] = useState<Post | null>(null);
+  const { confirm, dialog } = useConfirm();
 
   const filtered = search
     ? paged.filter((p) =>
@@ -37,6 +40,7 @@ export default function Board() {
       authorUid: user?.uid || '',
       board: 'free',
     });
+    toast.success('게시글이 등록되었습니다.');
     setMode('list');
   };
 
@@ -47,13 +51,16 @@ export default function Board() {
 
   const handleEditSubmit = async ({ title, content }: { title: string; content: string }) => {
     await updatePost(String(editPost!.id), { title, content });
+    toast.success('게시글이 수정되었습니다.');
     setEditPost(null);
     setMode('list');
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+    const ok = await confirm('정말 삭제하시겠습니까?');
+    if (!ok) return;
     await deletePost(id);
+    toast.success('게시글이 삭제되었습니다.');
     setSelectedId(null);
     setMode('list');
   };
@@ -70,7 +77,7 @@ export default function Board() {
         <PageBanner title="자유게시판" en="Free Board" />
         <section className="section">
           <div className="container">
-            <LoadingSpinner />
+            <SkeletonList rows={5} />
           </div>
         </section>
       </>
@@ -116,6 +123,7 @@ export default function Board() {
           )}
         </div>
       </section>
+      {dialog}
     </>
   );
 }

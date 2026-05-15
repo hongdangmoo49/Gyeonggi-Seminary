@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { MdDashboard, MdPeople, MdArticle, MdVideoLibrary, MdDescription, MdLogout, MdMenu, MdClose, MdShield } from 'react-icons/md';
 import useAuth from '../../hooks/useAuth';
+import { toast } from '../../hooks/useToast';
 import styles from './AdminLayout.module.css';
 
 const NAV = [
@@ -17,9 +18,15 @@ export default function AdminLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const handleLogout = async () => {
     await logout();
+    toast.info('로그아웃되었습니다.');
     navigate('/');
   };
 

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './hooks/useAuth';
 import ErrorBoundary from './components/ui/ErrorBoundary';
+import ToastContainer from './components/ui/ToastContainer';
 import Layout from './components/layout/Layout';
 import AdminGuard from './components/admin/AdminGuard';
 import AdminLayout from './components/admin/AdminLayout';
@@ -28,6 +29,7 @@ export default function App() {
     <BrowserRouter basename="/Gyeonggi-Seminary">
       <ErrorBoundary>
         <AuthProvider>
+          <ToastContainer />
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
