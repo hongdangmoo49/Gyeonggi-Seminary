@@ -19,7 +19,7 @@ export default function Community() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('notice');
   const { posts, paged, loading, page, setPage, totalPages, totalPosts, deletePost, addComment } = usePosts(activeTab);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const selectedPost = selectedId ? posts.find((p) => p.id === selectedId) : null;
 
@@ -30,7 +30,7 @@ export default function Community() {
     setSelectedId(null);
   };
 
-  const handleSelect = (id) => {
+  const handleSelect = (id: string) => {
     setSelectedId(id);
   };
 

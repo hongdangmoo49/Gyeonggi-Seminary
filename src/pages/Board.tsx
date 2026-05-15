@@ -8,15 +8,16 @@ import PostDetail from '../components/ui/PostDetail';
 import PostForm from '../components/ui/PostForm';
 import SearchBar from '../components/ui/SearchBar';
 import Pagination from '../components/ui/Pagination';
+import type { Post } from '../types';
 import styles from './Board.module.css';
 
 export default function Board() {
   const { posts, paged, loading, page, setPage, totalPages, totalPosts, addPost, updatePost, deletePost, incrementViews, addComment } = usePosts('free');
   const [search, setSearch] = useState('');
   const { user } = useAuth();
-  const [selectedId, setSelectedId] = useState(null);
-  const [mode, setMode] = useState('list');
-  const [editPost, setEditPost] = useState(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [mode, setMode] = useState<'list' | 'detail' | 'write' | 'edit'>('list');
+  const [editPost, setEditPost] = useState<Post | null>(null);
 
   const filtered = search
     ? paged.filter((p) =>
@@ -27,7 +28,7 @@ export default function Board() {
 
   const selectedPost = selectedId ? posts.find((p) => p.id === selectedId) : null;
 
-  const handleWrite = async ({ title, content }) => {
+  const handleWrite = async ({ title, content }: { title: string; content: string }) => {
     await addPost({
       title,
       content,
@@ -38,25 +39,25 @@ export default function Board() {
     setMode('list');
   };
 
-  const handleEdit = (post) => {
+  const handleEdit = (post: Post) => {
     setEditPost(post);
     setMode('edit');
   };
 
-  const handleEditSubmit = async ({ title, content }) => {
-    await updatePost(editPost.id, { title, content });
+  const handleEditSubmit = async ({ title, content }: { title: string; content: string }) => {
+    await updatePost(editPost!.id, { title, content });
     setEditPost(null);
     setMode('list');
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     await deletePost(id);
     setSelectedId(null);
     setMode('list');
   };
 
-  const handleSelect = async (id) => {
+  const handleSelect = async (id: string) => {
     setSelectedId(id);
     setMode('detail');
     await incrementViews(id);

@@ -3,17 +3,27 @@ import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firesto
 import { db } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { MdSearch, MdDelete, MdShield } from 'react-icons/md';
+import type { Role } from '../../types';
 import styles from './AdminUsers.module.css';
 
-const ROLE_LABELS = {
+const ROLE_LABELS: Record<string, string> = {
   superAdmin: '최고관리자',
   admin: '관리자',
   user: '일반',
 };
 
+interface UserData {
+  id: string;
+  name?: string;
+  email?: string;
+  role?: Role;
+  isAdmin?: boolean;
+  createdAt?: string;
+}
+
 export default function AdminUsers() {
   const { user: me } = useAuth();
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<UserData[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -22,18 +32,18 @@ export default function AdminUsers() {
   useEffect(() => {
     async function fetchUsers() {
       const snap = await getDocs(collection(db, 'users'));
-      setUsers(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      setUsers(snap.docs.map((d) => ({ id: d.id, ...d.data() } as UserData)));
       setLoading(false);
     }
     fetchUsers();
   }, []);
 
-  const setRole = async (userId, newRole) => {
+  const setRole = async (userId: string, newRole: Role) => {
     await updateDoc(doc(db, 'users', userId), { role: newRole });
     setUsers(users.map((u) => u.id === userId ? { ...u, role: newRole } : u));
   };
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (userId: string) => {
     const target = users.find((u) => u.id === userId);
     if (target?.role === 'superAdmin') {
       alert('최고관리자는 삭제할 수 없습니다.');

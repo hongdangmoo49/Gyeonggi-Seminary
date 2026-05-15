@@ -1,6 +1,7 @@
+import type { CommentProps } from '../../types';
 import styles from './Comment.module.css';
 
-export default function Comment({ comment }) {
+export default function Comment({ comment }: CommentProps) {
   return (
     <div className={styles.comment}>
       <div className={styles.meta}>

@@ -1,6 +1,7 @@
+import type { PostListProps } from '../../types';
 import styles from './PostList.module.css';
 
-export default function PostList({ posts, onSelect, totalPosts }) {
+export default function PostList({ posts, onSelect, totalPosts }: PostListProps) {
   return (
     <div className={styles.list}>
       <div className={styles.header}>

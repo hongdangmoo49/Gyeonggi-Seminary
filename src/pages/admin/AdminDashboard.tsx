@@ -4,9 +4,24 @@ import { db } from '../../firebase';
 import { MdPeople, MdArticle, MdVideoLibrary, MdDescription } from 'react-icons/md';
 import styles from './AdminDashboard.module.css';
 
+interface Stats {
+  users: number;
+  posts: number;
+  videos: number;
+  documents: number;
+}
+
+interface RecentPost {
+  id: string;
+  title?: string;
+  author?: string;
+  board?: string;
+  createdAt?: { toDate?: () => Date };
+}
+
 export default function AdminDashboard() {
-  const [stats, setStats] = useState({ users: 0, posts: 0, videos: 0, documents: 0 });
-  const [recentPosts, setRecentPosts] = useState([]);
+  const [stats, setStats] = useState<Stats>({ users: 0, posts: 0, videos: 0, documents: 0 });
+  const [recentPosts, setRecentPosts] = useState<RecentPost[]>([]);
 
   useEffect(() => {
     async function fetchStats() {
@@ -25,13 +40,13 @@ export default function AdminDashboard() {
       const posts = postsSnap.docs
         .map((d) => ({ id: d.id, ...d.data() }))
         .sort((a, b) => {
-          const ta = a.createdAt?.toDate?.() || 0;
-          const tb = b.createdAt?.toDate?.() || 0;
+          const ta = a.createdAt?.toDate?.()?.getTime() || 0;
+          const tb = b.createdAt?.toDate?.()?.getTime() || 0;
           return tb - ta;
         })
         .slice(0, 5);
 
-      setRecentPosts(posts);
+      setRecentPosts(posts as RecentPost[]);
     }
     fetchStats();
   }, []);

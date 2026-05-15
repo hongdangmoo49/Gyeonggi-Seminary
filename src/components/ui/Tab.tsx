@@ -1,7 +1,8 @@
+import type { TabProps } from '../../types';
 import { useState } from 'react';
 import styles from './Tab.module.css';
 
-export default function Tab({ tabs }) {
+export default function Tab({ tabs }: TabProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (

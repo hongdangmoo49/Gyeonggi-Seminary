@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { MdSearch, MdDelete, MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import type { BoardKey } from '../../types';
 import styles from './AdminPosts.module.css';
 
-const BOARD_LABELS = {
+const BOARD_LABELS: Record<BoardKey, string> = {
   free: '자유게시판',
   notice: '공지사항',
   academic: '학사공지',
@@ -13,8 +14,19 @@ const BOARD_LABELS = {
   alumni: '동문소식',
 };
 
+interface PostData {
+  id: string;
+  title?: string;
+  author?: string;
+  board?: BoardKey;
+  isNotice?: boolean;
+  views?: number;
+  comments?: unknown[];
+  createdAt?: { toDate?: () => Date };
+}
+
 export default function AdminPosts() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<PostData[]>([]);
   const [search, setSearch] = useState('');
   const [boardFilter, setBoardFilter] = useState('all');
   const [loading, setLoading] = useState(true);
@@ -22,10 +34,10 @@ export default function AdminPosts() {
   useEffect(() => {
     async function fetchPosts() {
       const snap = await getDocs(collection(db, 'posts'));
-      const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      const list = snap.docs.map((d) => ({ id: d.id, ...d.data() } as PostData));
       list.sort((a, b) => {
-        const ta = a.createdAt?.toDate?.() || 0;
-        const tb = b.createdAt?.toDate?.() || 0;
+        const ta = a.createdAt?.toDate?.()?.getTime() || 0;
+        const tb = b.createdAt?.toDate?.()?.getTime() || 0;
         return tb - ta;
       });
       setPosts(list);
@@ -34,13 +46,13 @@ export default function AdminPosts() {
     fetchPosts();
   }, []);
 
-  const handleDelete = async (postId) => {
+  const handleDelete = async (postId: string) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     await deleteDoc(doc(db, 'posts', postId));
     setPosts(posts.filter((p) => p.id !== postId));
   };
 
-  const toggleNotice = async (postId, current) => {
+  const toggleNotice = async (postId: string, current: boolean) => {
     await updateDoc(doc(db, 'posts', postId), { isNotice: !current });
     setPosts(posts.map((p) => p.id === postId ? { ...p, isNotice: !current } : p));
   };
@@ -100,11 +112,11 @@ export default function AdminPosts() {
             <tr key={p.id}>
               <td className={styles.postTitle}>{p.title}</td>
               <td>{p.author}</td>
-              <td>{BOARD_LABELS[p.board] || p.board}</td>
+              <td>{BOARD_LABELS[p.board as BoardKey] || p.board}</td>
               <td>
                 <button
                   className={`${styles.toggleBtn} ${p.isNotice ? styles.active : ''}`}
-                  onClick={() => toggleNotice(p.id, p.isNotice)}
+                  onClick={() => toggleNotice(p.id, !!p.isNotice)}
                 >
                   {p.isNotice ? <MdVisibility size={18} /> : <MdVisibilityOff size={18} />}
                 </button>

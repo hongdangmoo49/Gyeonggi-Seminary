@@ -1,7 +1,8 @@
+import type { PaginationProps } from '../../types';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import styles from './Pagination.module.css';
 
-export default function Pagination({ current, total, onChange }) {
+export default function Pagination({ current, total, onChange }: PaginationProps) {
   if (total <= 1) return null;
 
   const pages = [];

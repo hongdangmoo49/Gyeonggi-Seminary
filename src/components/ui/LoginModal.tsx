@@ -1,3 +1,5 @@
+import type { FormEvent } from 'react';
+import type { LoginModalProps } from '../../types';
 import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -5,7 +7,7 @@ import { auth } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import styles from './LoginModal.module.css';
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose }: LoginModalProps) {
   const { login, register } = useAuth();
   const [mode, setMode] = useState('login'); // login | register | reset
   const [email, setEmail] = useState('');
@@ -15,7 +17,7 @@ export default function LoginModal({ onClose }) {
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     setMessage('');

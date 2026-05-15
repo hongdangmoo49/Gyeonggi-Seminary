@@ -8,13 +8,13 @@ import styles from './Header.module.css';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showLogin, setShowLogin] = useState(false);
   const { user, logout } = useAuth();
   const isAdmin = user?.isAdmin;
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <>

@@ -1,8 +1,9 @@
+import type { AccordionProps } from '../../types';
 import { useState } from 'react';
 import { MdExpandMore } from 'react-icons/md';
 import styles from './Accordion.module.css';
 
-export default function Accordion({ items }) {
+export default function Accordion({ items }: AccordionProps) {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);

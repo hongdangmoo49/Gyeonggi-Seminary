@@ -1,7 +1,8 @@
+import type { CardProps } from '../../types';
 import { Link } from 'react-router-dom';
 import styles from './Card.module.css';
 
-export default function Card({ to, icon: Icon, title, description, className }) {
+export default function Card({ to, icon: Icon, title, description, className }: CardProps) {
   const Wrapper = to ? Link : 'div';
   return (
     <Wrapper to={to} className={`${styles.card} ${className || ''}`}>

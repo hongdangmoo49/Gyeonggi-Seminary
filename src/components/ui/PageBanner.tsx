@@ -1,6 +1,7 @@
+import type { PageBannerProps } from '../../types';
 import styles from './PageBanner.module.css';
 
-export default function PageBanner({ title, subtitle, en }) {
+export default function PageBanner({ title, subtitle, en }: PageBannerProps) {
   return (
     <section className={styles.banner}>
       <div className="container">

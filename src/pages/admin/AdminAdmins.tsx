@@ -2,22 +2,31 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { MdShield } from 'react-icons/md';
+import type { Role } from '../../types';
 import styles from './AdminAdmins.module.css';
 
-const ROLE_LABELS = {
+const ROLE_LABELS: Record<string, string> = {
   superAdmin: '최고관리자',
   admin: '관리자',
 };
 
+interface AdminData {
+  id: string;
+  name?: string;
+  email?: string;
+  role?: Role;
+  isAdmin?: boolean;
+}
+
 export default function AdminAdmins() {
-  const [admins, setAdmins] = useState([]);
+  const [admins, setAdmins] = useState<AdminData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchAdmins() {
       const snap = await getDocs(collection(db, 'users'));
       const list = snap.docs
-        .map((d) => ({ id: d.id, ...d.data() }))
+        .map((d) => ({ id: d.id, ...d.data() } as AdminData))
         .filter((u) => u.role === 'admin' || u.role === 'superAdmin' || u.isAdmin);
       list.sort((a, b) => (a.role === 'superAdmin' ? -1 : 1));
       setAdmins(list);

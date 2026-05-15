@@ -3,11 +3,16 @@ import PageBanner from '../components/ui/PageBanner';
 import Tab from '../components/ui/Tab';
 import FilterTabs from '../components/ui/FilterTabs';
 import { graduateLectures, researchLectures } from '../data/lectures';
+import type { Lecture } from '../types';
 import styles from './Graduate.module.css';
 
 const GRAD_CATEGORIES = ['전체', '심화 성경학', '심화 신학', '심화 실천신학'];
 
-function LectureTable({ lectures }) {
+interface LectureTableProps {
+  lectures: Lecture[];
+}
+
+function LectureTable({ lectures }: LectureTableProps) {
   const [category, setCategory] = useState('전체');
 
   const filtered = category === '전체'
@@ -77,9 +82,7 @@ function ResearchSection() {
       </p>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
-          <thead>
-            <tr><th>과목명</th><th>교수</th><th>학기</th><th>학점</th><th>비고</th></tr>
-          </thead>
+          <thead><tr><th>과목명</th><th>교수</th><th>학기</th><th>학점</th><th>비고</th></tr></thead>
           <tbody>
             {researchLectures.map((lec) => (
               <tr key={lec.id}>

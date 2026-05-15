@@ -1,3 +1,4 @@
+import type { PostDetailProps } from '../../types';
 import { useState } from 'react';
 import { MdArrowBack, MdEdit, MdDelete } from 'react-icons/md';
 import useAuth from '../../hooks/useAuth';
@@ -5,7 +6,7 @@ import { validateInput } from '../../utils/validation';
 import Comment from './Comment';
 import styles from './PostDetail.module.css';
 
-export default function PostDetail({ post, onBack, onEdit, onDelete, onAddComment }) {
+export default function PostDetail({ post, onBack, onEdit, onDelete, onAddComment }: PostDetailProps) {
   const { user } = useAuth();
   const [commentContent, setCommentContent] = useState('');
   const [commentError, setCommentError] = useState('');

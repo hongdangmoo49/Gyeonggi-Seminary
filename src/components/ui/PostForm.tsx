@@ -1,14 +1,16 @@
+import type { FormEvent } from 'react';
+import type { PostFormProps } from '../../types';
 import { useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 import { validateInput } from '../../utils/validation';
 import styles from './PostForm.module.css';
 
-export default function PostForm({ initialData, onSubmit, onBack }) {
+export default function PostForm({ initialData, onSubmit, onBack }: PostFormProps) {
   const [title, setTitle] = useState(initialData?.title || '');
   const [content, setContent] = useState(initialData?.content || '');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setError('');
 
