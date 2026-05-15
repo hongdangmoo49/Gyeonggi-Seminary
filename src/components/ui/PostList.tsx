@@ -15,7 +15,7 @@ export default function PostList({ posts, onSelect, totalPosts }: PostListProps)
         <div
           key={post.id}
           className={`${styles.row} ${post.isNotice ? styles.notice : ''}`}
-          onClick={() => onSelect(post.id)}
+          onClick={() => onSelect(String(post.id))}
         >
           <span className={styles.colNum}>
             {post.isNotice ? '공지' : (totalPosts ?? posts.length) - index}

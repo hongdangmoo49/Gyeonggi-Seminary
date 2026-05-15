@@ -31,14 +31,14 @@ export interface AuthContextType {
 export type BoardKey = 'free' | 'notice' | 'academic' | 'prayer' | 'books' | 'alumni';
 
 export interface Comment {
-  id: string;
+  id: string | number;
   author: string;
   date: string;
   content: string;
 }
 
 export interface Post {
-  id: string;
+  id: string | number;
   title: string;
   author: string;
   authorUid?: string;
@@ -46,7 +46,7 @@ export interface Post {
   views: number;
   content: string;
   board: BoardKey;
-  isNotice: boolean;
+  isNotice?: boolean;
   comments: Comment[];
   createdAt?: unknown; // Firestore Timestamp
 }
@@ -147,7 +147,7 @@ export interface AccordionProps {
 
 export interface CardProps {
   to?: string;
-  icon?: ComponentType;
+  icon?: ComponentType<{ className?: string }>;
   title: string;
   description?: string;
   className?: string;

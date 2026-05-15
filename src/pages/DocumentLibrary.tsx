@@ -15,7 +15,7 @@ import styles from './DocumentLibrary.module.css';
 const CATEGORIES = ['전체', '강의자료', '서식', '학사안내', '학술자료'];
 const PER_PAGE = 6;
 
-const FILE_ICONS: Record<string, ComponentType> = {
+const FILE_ICONS: Record<string, ComponentType<{ className?: string }>> = {
   PDF: MdPictureAsPdf,
   PPTX: MdSlideshow,
 };

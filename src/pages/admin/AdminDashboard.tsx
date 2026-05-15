@@ -38,7 +38,7 @@ export default function AdminDashboard() {
       });
 
       const posts = postsSnap.docs
-        .map((d) => ({ id: d.id, ...d.data() }))
+        .map((d) => ({ id: d.id, ...d.data() } as RecentPost & { id: string }))
         .sort((a, b) => {
           const ta = a.createdAt?.toDate?.()?.getTime() || 0;
           const tb = b.createdAt?.toDate?.()?.getTime() || 0;
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
         })
         .slice(0, 5);
 
-      setRecentPosts(posts as RecentPost[]);
+      setRecentPosts(posts);
     }
     fetchStats();
   }, []);

@@ -19,10 +19,11 @@ export default function PostDetail({ post, onBack, onEdit, onDelete, onAddCommen
   const canDelete = isAdmin;
 
   const handleAddComment = () => {
+    if (!onAddComment || !user) return;
     setCommentError('');
     const error = validateInput(commentContent, { min: 1, max: 500, label: '댓글' });
     if (error) { setCommentError(error); return; }
-    onAddComment(post.id, { author: user.name || user.email, content: commentContent.trim() });
+    onAddComment(String(post.id), { author: user.name || user.email || '익명', content: commentContent.trim() });
     setCommentContent('');
   };
 
@@ -39,7 +40,7 @@ export default function PostDetail({ post, onBack, onEdit, onDelete, onAddCommen
             </button>
           )}
           {canDelete && onDelete && (
-            <button className={styles.deleteBtn} onClick={() => onDelete(post.id)}>
+            <button className={styles.deleteBtn} onClick={() => onDelete(String(post.id))}>
               <MdDelete /> 삭제
             </button>
           )}

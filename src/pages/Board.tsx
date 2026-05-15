@@ -32,8 +32,8 @@ export default function Board() {
     await addPost({
       title,
       content,
-      author: user.name || user.email,
-      authorUid: user.uid,
+      author: user?.name || user?.email || '익명',
+      authorUid: user?.uid || '',
       board: 'free',
     });
     setMode('list');
@@ -45,7 +45,7 @@ export default function Board() {
   };
 
   const handleEditSubmit = async ({ title, content }: { title: string; content: string }) => {
-    await updatePost(editPost!.id, { title, content });
+    await updatePost(String(editPost!.id), { title, content });
     setEditPost(null);
     setMode('list');
   };

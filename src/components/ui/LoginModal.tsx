@@ -28,12 +28,13 @@ export default function LoginModal({ onClose }: LoginModalProps) {
         try {
           await sendPasswordResetEmail(auth, email);
           setMessage('비밀번호 재설정 이메일을 발송했습니다. 이메일을 확인해주세요.');
-        } catch (err) {
-          const messages = {
+        } catch (err: unknown) {
+          const errorRecord = err as { code?: string };
+          const messages: Record<string, string> = {
             'auth/user-not-found': '해당 이메일로 가입된 계정이 없습니다.',
             'auth/invalid-email': '올바른 이메일 형식이 아닙니다.',
           };
-          setError(messages[err.code] || '이메일 발송에 실패했습니다.');
+          setError(messages[errorRecord.code || ''] || '이메일 발송에 실패했습니다.');
         }
         return;
       }
@@ -43,7 +44,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
         if (result.success) {
           onClose();
         } else {
-          setError(result.message);
+          setError(result.message || '로그인에 실패했습니다.');
         }
       } else {
         if (!name.trim() || name.trim().length < 2) {
@@ -62,7 +63,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
         if (result.success) {
           onClose();
         } else {
-          setError(result.message);
+          setError(result.message || '회원가입에 실패했습니다.');
         }
       }
     } finally {
@@ -70,7 +71,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
     }
   };
 
-  const TITLES = { login: '로그인', register: '회원가입', reset: '비밀번호 찾기' };
+  const TITLES: Record<string, string> = { login: '로그인', register: '회원가입', reset: '비밀번호 찾기' };
 
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -119,7 +120,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
           {message && <p className={styles.success}>{message}</p>}
 
           <button type="submit" className={styles.submitBtn} disabled={submitting}>
-            {submitting ? '처리 중...' : TITLES[mode]}
+            {submitting ? '처리 중...' : (TITLES[mode] ?? '')}
           </button>
         </form>
 

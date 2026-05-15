@@ -4,9 +4,9 @@ import { MdExpandMore } from 'react-icons/md';
 import styles from './Accordion.module.css';
 
 export default function Accordion({ items }: AccordionProps) {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
+  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
     <div className={styles.accordion}>
