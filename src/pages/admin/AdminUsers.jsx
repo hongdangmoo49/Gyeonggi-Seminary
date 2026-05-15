@@ -72,11 +72,11 @@ export default function AdminUsers() {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th className={styles.colName}>이름</th>
-            <th className={styles.colEmail}>이메일</th>
-            <th className={styles.colRole}>역할</th>
-            <th className={styles.colDate}>가입일</th>
-            {isSuperAdmin && <th className={styles.colActions}>관리</th>}
+            <th>이름</th>
+            <th>이메일</th>
+            <th>역할</th>
+            <th>가입일</th>
+            {isSuperAdmin && <th>관리</th>}
           </tr>
         </thead>
         <tbody>

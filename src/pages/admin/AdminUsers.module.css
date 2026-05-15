@@ -45,19 +45,14 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  table-layout: fixed;
 }
 
 .table th,
 .table td {
-  padding: 14px var(--space-md);
+  padding: var(--space-md);
   text-align: left;
   font-size: var(--text-sm);
   border-bottom: 1px solid var(--color-border);
-  vertical-align: middle;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .table th {
@@ -66,17 +61,10 @@
   color: var(--color-text-light);
 }
 
-/* Column widths */
-.colName { width: 15%; }
-.colEmail { width: 30%; }
-.colRole { width: 12%; }
-.colDate { width: 14%; }
-.colActions { width: auto; }
-
 .name {
   font-weight: 600;
   color: var(--color-text-dark);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--space-xs);
 }
@@ -84,7 +72,6 @@
 .superIcon {
   color: var(--color-gold);
   font-size: 1.1rem;
-  flex-shrink: 0;
 }
 
 /* Role badges */
@@ -113,7 +100,7 @@
 
 /* Actions */
 .actions {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
