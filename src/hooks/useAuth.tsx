@@ -86,7 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthContextType>(() => ({ user, login, register, logout, loading }), [user, loading]);
 
   if (loading) {
-    return null;
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#1B2A4A' }}>
+        <div style={{ textAlign: 'center', color: '#fff' }}>
+          <div style={{ width: 36, height: 36, border: '3px solid rgba(255,255,255,0.2)', borderTopColor: '#C8A96E', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 16px' }} />
+          <span style={{ fontFamily: "'Noto Sans KR',sans-serif", fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)' }}>경기신학교</span>
+        </div>
+      </div>
+    );
   }
 
   return (
