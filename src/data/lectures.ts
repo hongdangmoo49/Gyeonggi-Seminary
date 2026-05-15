@@ -1,4 +1,6 @@
-const undergraduateLectures = [
+import type { Lecture } from '../types';
+
+const undergraduateLectures: Lecture[] = [
   // 구약성경
   { id: 1, category: '구약성경', name: '구약개론', professor: '김XX 교수', semester: '2026-1', credits: 3, description: '구약성경의 전체 구조와 배경, 각 권의 핵심 메시지를 개괄합니다.' },
   { id: 2, category: '구약성경', name: '모세오경', professor: '김XX 교수', semester: '2026-1', credits: 3, description: '창세기~신명기까지의 텍스트를 깊이 있게 학습합니다.' },
@@ -34,7 +36,7 @@ const undergraduateLectures = [
   { id: 24, category: '실천신학', name: '예배학', professor: '윤XX 교수', semester: '2026-2', credits: 3, description: '예배의 신학적 기초와 예배의 실제를 다룹니다.' },
 ];
 
-const graduateLectures = [
+const graduateLectures: Lecture[] = [
   // 심화 성경학
   { id: 101, category: '심화 성경학', name: '구약신학', professor: '김XX 교수', semester: '2026-1', credits: 3, description: '구약성경의 신학적 주제를 심화 연구합니다.' },
   { id: 102, category: '심화 성경학', name: '신약신학', professor: '이XX 교수', semester: '2026-1', credits: 3, description: '신약성경의 신학적 주제를 심화 연구합니다.' },
@@ -55,7 +57,7 @@ const graduateLectures = [
   { id: 113, category: '심화 실천신학', name: '기독교교육방법론', professor: '강XX 교수', semester: '2026-2', credits: 3, description: '교회 교육의 체계적 방법과 실천적 적용을 다룹니다.' },
 ];
 
-const researchLectures = [
+const researchLectures: Lecture[] = [
   { id: 201, category: '연구원', name: '신학논문작성법', professor: '정XX 교수', semester: '2026-1', credits: 3, description: '학술 논문 작성의 원리와 실제를 체계적으로 학습합니다.' },
   { id: 202, category: '연구원', name: '특강 세미나', professor: '초빙 교수', semester: '2026-1', credits: 3, description: '매 학기 초빙 교수의 특강 (주제는 학기별로 변경됩니다).' },
   { id: 203, category: '연구원', name: '개별연구지도', professor: '지도교수', semester: '2026-1', credits: 3, description: '지도교수와의 1:1 연구 지도를 통해 논문 주제를 발전시킵니다.' },

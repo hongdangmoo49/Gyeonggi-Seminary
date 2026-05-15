@@ -1,4 +1,6 @@
-const documents = [
+import type { Document } from '../types';
+
+const documents: Document[] = [
   { id: 1, category: '서식', title: '2026학년도 입학원서', fileType: 'PDF', size: '500KB', date: '2026.01.15', downloads: 128 },
   { id: 2, category: '서식', title: '담임목사 추천서 양식', fileType: 'PDF', size: '300KB', date: '2026.01.15', downloads: 95 },
   { id: 3, category: '서식', title: '등록 신청서', fileType: 'PDF', size: '250KB', date: '2026.01.20', downloads: 72 },

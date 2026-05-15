@@ -1,3 +1,4 @@
+import type { NavItem } from '../types';
 import {
   MdAccountBalance,
   MdWavingHand,
@@ -11,7 +12,7 @@ import {
   MdChurch,
 } from 'react-icons/md';
 
-const navigation = [
+const navigation: NavItem[] = [
   {
     label: '학교소개',
     path: '/about',

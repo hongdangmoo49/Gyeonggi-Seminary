@@ -1,4 +1,6 @@
-const videos = [
+import type { Video } from '../types';
+
+const videos: Video[] = [
   { id: 1, category: '학부강의', title: '구약개론 제1강 — 구약성경의 구조와 배경', professor: '김XX 교수', date: '2026.03.05', duration: '90분', thumbnail: null },
   { id: 2, category: '학부강의', title: '구약개론 제2강 — 창조와 타락', professor: '김XX 교수', date: '2026.03.12', duration: '90분', thumbnail: null },
   { id: 3, category: '학부강의', title: '신약개론 제1강 — 신약성경의 세계', professor: '이XX 교수', date: '2026.03.07', duration: '90분', thumbnail: null },

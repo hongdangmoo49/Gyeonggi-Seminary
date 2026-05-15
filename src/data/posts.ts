@@ -1,4 +1,6 @@
-const posts = [
+import type { Post } from '../types';
+
+const posts: Post[] = [
   {
     id: 1,
     board: 'notice',
