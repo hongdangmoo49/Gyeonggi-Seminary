@@ -25,35 +25,6 @@ export default function Header() {
             <span className={styles.logoEn}>Gyeonggi Seminary</span>
           </Link>
 
-          <div className={styles.right}>
-            <div className={styles.authArea}>
-              {user ? (
-                <div className={styles.userInfo}>
-                  <MdPerson />
-                  <span className={styles.userName}>{user.name}</span>
-                  {isAdmin && (
-                    <Link to="/admin" className={styles.adminLink} title="관리자 페이지">
-                      <MdAdminPanelSettings />
-                    </Link>
-                  )}
-                  <button className={styles.logoutBtn} onClick={() => logout()}>로그아웃</button>
-                </div>
-              ) : (
-                <button className={styles.loginBtn} onClick={() => setShowLogin(true)}>
-                  <MdLogin /> 로그인
-                </button>
-              )}
-            </div>
-
-            <button
-              className={styles.hamburger}
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={mobileOpen ? '메뉴 닫기' : '메뉴 열기'}
-            >
-              {mobileOpen ? <MdClose size={28} /> : <MdMenu size={28} />}
-            </button>
-          </div>
-
           <nav className={`${styles.nav} ${mobileOpen ? styles.navOpen : ''}`}>
             <ul className={styles.menu}>
               {navigation.map((item) => (
@@ -134,6 +105,35 @@ export default function Header() {
               )}
             </div>
           </nav>
+
+          <div className={styles.right}>
+            <div className={styles.authArea}>
+              {user ? (
+                <div className={styles.userInfo}>
+                  <MdPerson />
+                  <span className={styles.userName}>{user.name}</span>
+                  {isAdmin && (
+                    <Link to="/admin" className={styles.adminLink} title="관리자 페이지">
+                      <MdAdminPanelSettings />
+                    </Link>
+                  )}
+                  <button className={styles.logoutBtn} onClick={() => logout()}>로그아웃</button>
+                </div>
+              ) : (
+                <button className={styles.loginBtn} onClick={() => setShowLogin(true)}>
+                  <MdLogin /> 로그인
+                </button>
+              )}
+            </div>
+
+            <button
+              className={styles.hamburger}
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? '메뉴 닫기' : '메뉴 열기'}
+            >
+              {mobileOpen ? <MdClose size={28} /> : <MdMenu size={28} />}
+            </button>
+          </div>
         </div>
 
         {mobileOpen && <div className={styles.overlay} onClick={() => setMobileOpen(false)} />}
