@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
       if (firebaseUser) {
         const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
         const data = userDoc.exists() ? userDoc.data() : {};
-        const role = data.role || 'user';
+        const role = data.role || (data.isAdmin ? 'admin' : 'user');
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
