@@ -12,11 +12,12 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '../firebase';
+import type { Post, UsePostsReturn } from '../types';
 
 const PER_PAGE = 5;
 
-export default function usePosts(boardKey) {
-  const [posts, setPosts] = useState([]);
+export default function usePosts(boardKey: string): UsePostsReturn {
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
 
@@ -26,22 +27,22 @@ export default function usePosts(boardKey) {
     if (!boardKey) return;
 
     setLoading(true);
-    const q = query(
-      postsRef,
-      where('board', '==', boardKey)
-    );
+    const q = query(postsRef, where('board', '==', boardKey));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const list = snapshot.docs
-        .map((d) => ({
-          id: d.id,
-          ...d.data(),
-          date: d.data().createdAt?.toDate?.().toISOString().slice(0, 10).replace(/-/g, '.') || '',
-        }))
+      const list: Post[] = snapshot.docs
+        .map((d) => {
+          const data = d.data();
+          return {
+            id: d.id,
+            ...(data as Omit<Post, 'id'>),
+            date: data.createdAt?.toDate?.().toISOString().slice(0, 10).replace(/-/g, '.') || '',
+          } as Post;
+        })
         .sort((a, b) => {
           if (a.isNotice !== b.isNotice) return a.isNotice ? -1 : 1;
-          const ta = a.createdAt?.toDate?.() || 0;
-          const tb = b.createdAt?.toDate?.() || 0;
+          const ta = a.createdAt ? new Date(a.createdAt as unknown as number).getTime() : 0;
+          const tb = b.createdAt ? new Date(b.createdAt as unknown as number).getTime() : 0;
           return tb - ta;
         });
       setPosts(list);
@@ -54,31 +55,38 @@ export default function usePosts(boardKey) {
     return () => unsubscribe();
   }, [boardKey]);
 
-  const addPost = useCallback(async ({ title, author, content, board, isNotice, authorUid }) => {
+  const addPost = useCallback(async (data: {
+    title: string;
+    content: string;
+    author: string;
+    authorUid: string;
+    board: string;
+    isNotice?: boolean;
+  }) => {
     await addDoc(postsRef, {
-      title,
-      author,
-      authorUid: authorUid || '',
-      content,
-      board,
-      isNotice: isNotice || false,
+      title: data.title,
+      author: data.author,
+      authorUid: data.authorUid || '',
+      content: data.content,
+      board: data.board,
+      isNotice: data.isNotice || false,
       views: 0,
       comments: [],
       createdAt: serverTimestamp(),
     });
   }, []);
 
-  const updatePost = useCallback(async (postId, data) => {
+  const updatePost = useCallback(async (postId: string, data: Partial<Post>) => {
     const ref = doc(db, 'posts', postId);
     await updateDoc(ref, data);
   }, []);
 
-  const deletePost = useCallback(async (postId) => {
+  const deletePost = useCallback(async (postId: string) => {
     const ref = doc(db, 'posts', postId);
     await deleteDoc(ref);
   }, []);
 
-  const incrementViews = useCallback(async (postId) => {
+  const incrementViews = useCallback(async (postId: string) => {
     const ref = doc(db, 'posts', postId);
     const snap = await getDoc(ref);
     if (snap.exists()) {
@@ -86,7 +94,7 @@ export default function usePosts(boardKey) {
     }
   }, []);
 
-  const addComment = useCallback(async (postId, { author, content }) => {
+  const addComment = useCallback(async (postId: string, { author, content }: { author: string; content: string }) => {
     const ref = doc(db, 'posts', postId);
     const snap = await getDoc(ref);
     if (snap.exists()) {
@@ -102,7 +110,6 @@ export default function usePosts(boardKey) {
   }, []);
 
   const filtered = posts;
-
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
   const paged = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
