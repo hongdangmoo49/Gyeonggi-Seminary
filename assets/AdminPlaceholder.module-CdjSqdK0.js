@@ -1,0 +1,1 @@
+var e={title:`_title_l0ip7_1`,placeholder:`_placeholder_l0ip7_8`};export{e as t};

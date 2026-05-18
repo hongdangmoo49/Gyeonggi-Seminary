@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-BOY_dY-B.js";var t={filter:`_filter_nv6tl_1`,button:`_button_nv6tl_8`,active:`_active_nv6tl_24`},n=e();function r({categories:e,active:r,onChange:i}){return(0,n.jsx)(`div`,{className:t.filter,children:e.map(e=>(0,n.jsx)(`button`,{className:`${t.button} ${r===e?t.active:``}`,onClick:()=>i(e),children:e},e))})}export{r as t};
