@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MdMenu, MdClose, MdChevronRight, MdLogin, MdLogout, MdPerson, MdAdminPanelSettings } from 'react-icons/md';
+import { MdMenu, MdClose, MdChevronRight, MdLogin, MdLogout, MdPerson, MdAdminPanelSettings, MdDarkMode, MdLightMode } from 'react-icons/md';
 import navigation from '../../data/navigation';
 import useAuth from '../../hooks/useAuth';
+import useTheme from '../../hooks/useTheme';
 import LoginModal from '../ui/LoginModal';
 import styles from './Header.module.css';
 
@@ -11,6 +12,7 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showLogin, setShowLogin] = useState(false);
   const { user, logout } = useAuth();
+  const { isDark, toggle: toggleTheme } = useTheme();
   const isAdmin = user?.isAdmin;
   const location = useLocation();
 
@@ -86,6 +88,9 @@ export default function Header() {
 
             {/* Mobile auth */}
             <div className={styles.mobileAuth}>
+              <button className={styles.mobileThemeBtn} onClick={toggleTheme}>
+                {isDark ? <><MdLightMode /> 라이트 모드</> : <><MdDarkMode /> 다크 모드</>}
+              </button>
               {user ? (
                 <div className={styles.mobileUserInfo}>
                   <MdPerson /> {user.name}님
@@ -107,6 +112,9 @@ export default function Header() {
           </nav>
 
           <div className={styles.right}>
+            <button className={styles.themeBtn} onClick={toggleTheme} aria-label={isDark ? '라이트 모드' : '다크 모드'}>
+              {isDark ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
+            </button>
             <div className={styles.authArea}>
               {user ? (
                 <div className={styles.userInfo}>

@@ -56,6 +56,34 @@
   gap: var(--space-md);
 }
 
+/* Theme toggle */
+.themeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  padding: var(--space-xs);
+  transition: color var(--transition-fast);
+}
+
+.themeBtn:hover {
+  color: var(--color-gold);
+}
+
+.mobileThemeBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--text-sm);
+  width: 100%;
+}
+
+.mobileThemeBtn:hover {
+  color: var(--color-gold);
+}
+
 /* Auth */
 .authArea {
   display: flex;
