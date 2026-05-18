@@ -13,8 +13,9 @@ export default function Layout() {
 
   return (
     <>
+      <a href="#main-content" className="sr-only skip-link">본문으로 바로가기</a>
       <Header />
-      <main className={styles.main} key={pathname}>
+      <main id="main-content" className={styles.main} key={pathname} tabIndex={-1}>
         <Outlet />
       </main>
       <Footer />

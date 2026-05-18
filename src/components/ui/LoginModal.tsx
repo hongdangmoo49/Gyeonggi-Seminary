@@ -1,15 +1,29 @@
 import type { FormEvent } from 'react';
 import type { LoginModalProps } from '../../types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
+import useFocusTrap from '../../hooks/useFocusTrap';
 import styles from './LoginModal.module.css';
 
 export default function LoginModal({ onClose }: LoginModalProps) {
   const { login, register } = useAuth();
-  const [mode, setMode] = useState('login'); // login | register | reset
+  const [mode, setMode] = useState('login');
+  const trapRef = useFocusTrap(true);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -74,9 +88,9 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   const TITLES: Record<string, string> = { login: '로그인', register: '회원가입', reset: '비밀번호 찾기' };
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose}>
+    <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true" aria-label={TITLES[mode]}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()} ref={trapRef}>
+        <button className={styles.closeBtn} onClick={onClose} aria-label="닫기">
           <MdClose />
         </button>
 

@@ -107,6 +107,34 @@ h4 { font-size: var(--text-h4); font-weight: 600; }
   border: 0;
 }
 
+.skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  padding: 12px 24px;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: var(--color-blue);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--color-gold);
+}
+
 /* Dark mode component overrides */
 [data-theme="dark"] input,
 [data-theme="dark"] textarea,

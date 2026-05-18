@@ -18,6 +18,16 @@ export default function Header() {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleDropdownKey = (label: string, e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setActiveDropdown(activeDropdown === label ? null : label);
+    }
+    if (e.key === 'Escape') {
+      setActiveDropdown(null);
+    }
+  };
+
   return (
     <>
       <header className={styles.header}>
@@ -27,7 +37,7 @@ export default function Header() {
             <span className={styles.logoEn}>Gyeonggi Seminary</span>
           </Link>
 
-          <nav className={`${styles.nav} ${mobileOpen ? styles.navOpen : ''}`}>
+          <nav className={`${styles.nav} ${mobileOpen ? styles.navOpen : ''}`} aria-label="주요 메뉴">
             <ul className={styles.menu}>
               {navigation.map((item) => (
                 <li
@@ -46,7 +56,14 @@ export default function Header() {
                     </Link>
                   ) : (
                     <>
-                      <span className={`${styles.menuLink} ${item.children?.some(c => isActive(c.path)) ? styles.active : ''}`}>
+                      <span
+                        className={`${styles.menuLink} ${item.children?.some(c => isActive(c.path)) ? styles.active : ''}`}
+                        tabIndex={0}
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded={activeDropdown === item.label}
+                        onKeyDown={(e) => handleDropdownKey(item.label, e)}
+                      >
                         {item.label}
                       </span>
                       {item.children && activeDropdown === item.label && (
