@@ -10,11 +10,14 @@ import {
   MdChevronRight,
 } from 'react-icons/md';
 import Card from '../components/ui/Card';
+import useScrollReveal from '../hooks/useScrollReveal';
 import styles from './Home.module.css';
 
 export default function Home() {
+  const revealRef = useScrollReveal();
+
   return (
-    <div>
+    <div ref={revealRef}>
       {/* Hero */}
       <section className={styles.hero}>
         <div className="container">
@@ -33,7 +36,7 @@ export default function Home() {
       </section>
 
       {/* Quick Links */}
-      <section className="section">
+      <section className="section" data-reveal>
         <div className="container">
           <h2 className="section-title">빠른 이동</h2>
           <div className={styles.quickGrid}>
@@ -46,7 +49,7 @@ export default function Home() {
       </section>
 
       {/* About Summary */}
-      <section className={`${styles.aboutSection} section`}>
+      <section className={`${styles.aboutSection} section`} data-reveal>
         <div className="container">
           <div className={styles.aboutGrid}>
             <div className={styles.aboutText}>
@@ -86,7 +89,7 @@ export default function Home() {
       </section>
 
       {/* Lecture Shortcuts */}
-      <section className="section">
+      <section className="section" data-reveal>
         <div className="container">
           <h2 className="section-title">강의실 바로가기</h2>
           <div className={styles.lectureGrid}>
@@ -111,7 +114,7 @@ export default function Home() {
       </section>
 
       {/* Resources & Community */}
-      <section className={`${styles.resourcesSection} section`}>
+      <section className={`${styles.resourcesSection} section`} data-reveal>
         <div className="container">
           <h2 className="section-title">자료실 & 커뮤니티</h2>
           <div className={styles.quickGrid}>

@@ -1,8 +1,10 @@
 import PageBanner from '../components/ui/PageBanner';
 import Accordion from '../components/ui/Accordion';
+import useScrollReveal from '../hooks/useScrollReveal';
 import styles from './Admission.module.css';
 
 export default function Admission() {
+  const revealRef = useScrollReveal();
   const faqItems = [
     {
       title: '직장인도 수강할 수 있나요?',
@@ -29,10 +31,10 @@ export default function Admission() {
   return (
     <>
       <PageBanner title="입학안내" en="Admission" />
-      <section className="section">
+      <section className="section" ref={revealRef}>
         <div className="container">
           {/* 자격 요건 */}
-          <div className={styles.block}>
+          <div className={styles.block} data-reveal>
             <h2 className={styles.blockTitle}>입학 자격</h2>
             <table className={styles.table}>
               <thead>
@@ -48,7 +50,7 @@ export default function Admission() {
           </div>
 
           {/* 입학 일정 */}
-          <div className={styles.block}>
+          <div className={styles.block} data-reveal>
             <h2 className={styles.blockTitle}>입학 일정</h2>
             <div className={styles.timeline}>
               {[
@@ -71,7 +73,7 @@ export default function Admission() {
           </div>
 
           {/* 제출 서류 */}
-          <div className={styles.block}>
+          <div className={styles.block} data-reveal>
             <h2 className={styles.blockTitle}>제출 서류</h2>
             <ol className={styles.docList}>
               <li><strong>입학원서</strong> (소정 양식)</li>
@@ -84,7 +86,7 @@ export default function Admission() {
           </div>
 
           {/* FAQ */}
-          <div className={styles.block}>
+          <div className={styles.block} data-reveal>
             <h2 className={styles.blockTitle}>자주 묻는 질문</h2>
             <Accordion items={faqItems} />
           </div>
