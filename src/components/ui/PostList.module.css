@@ -27,6 +27,12 @@
   background: var(--color-bg);
 }
 
+.row:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: -2px;
+  background: var(--color-bg);
+}
+
 .notice {
   background: rgba(200, 169, 110, 0.05);
 }

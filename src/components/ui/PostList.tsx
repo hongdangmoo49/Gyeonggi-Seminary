@@ -16,14 +16,23 @@ export default function PostList({ posts, onSelect, totalPosts }: PostListProps)
         <div
           key={post.id}
           className={`${styles.row} ${post.isNotice ? styles.notice : ''}`}
+          role="link"
+          tabIndex={0}
+          aria-label={`${post.isNotice ? '공지사항: ' : ''}${post.title}, 작성자 ${post.author}, 작성일 ${post.date}, 조회수 ${post.views}`}
           onClick={() => onSelect(String(post.id))}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onSelect(String(post.id));
+            }
+          }}
         >
           <span className={styles.colNum}>
             {post.isNotice ? '공지' : (totalPosts ?? posts.length) - index}
           </span>
           <span className={styles.colTitle}>
             {post.title}
-            {post.comments?.length > 0 && (
+            {post.comments && post.comments.length > 0 && (
               <span className={styles.commentCount}>[{post.comments.length}]</span>
             )}
           </span>

@@ -161,7 +161,7 @@ export default function Header() {
           </div>
         </div>
 
-        {mobileOpen && <div className={styles.overlay} onClick={() => setMobileOpen(false)} />}
+        {mobileOpen && <div className={styles.overlay} onClick={() => setMobileOpen(false)} role="presentation" aria-hidden="true" />}
       </header>
 
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}

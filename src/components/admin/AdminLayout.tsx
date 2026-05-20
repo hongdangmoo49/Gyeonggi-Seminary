@@ -69,7 +69,7 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      <div className={styles.overlay} onClick={() => setSidebarOpen(false)} style={{ display: sidebarOpen ? 'block' : 'none' }} />
+      <div className={styles.overlay} onClick={() => setSidebarOpen(false)} style={{ display: sidebarOpen ? 'block' : 'none' }} role="presentation" aria-hidden="true" />
 
       <main className={styles.main}>
         <div className={styles.topbar}>
