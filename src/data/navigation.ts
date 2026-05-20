@@ -4,8 +4,6 @@ import {
   MdWavingHand,
   MdSchool,
   MdMenuBook,
-  MdAutoStories,
-  MdPlayCircle,
   MdFolderOpen,
   MdForum,
   MdChatBubble,
