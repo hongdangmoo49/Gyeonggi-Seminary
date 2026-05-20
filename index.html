@@ -10,6 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
     <title>경기신학교 | Gyeonggi Seminary</title>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      (function(l) {
+        if (l.search[1] === 'p') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).filter(function(v) {
+            return v.indexOf('p=') === 0
+          })[0];
+          if (decoded) {
+            var path = decoded.split('=')[1];
+            var q = l.search.slice(1).split('&').filter(function(s) {
+              return s.indexOf('p=') !== 0
+            }).join('&');
+            if (q) q = '?' + q.replace(/~and~/g, '&');
+            window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + (path ? '/' + path : '') + q + l.hash
+            );
+          }
+        }
+      }(window.location));
+    </script>
   </head>
   <body>
     <div id="root">
