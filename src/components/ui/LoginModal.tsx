@@ -6,6 +6,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import useFocusTrap from '../../hooks/useFocusTrap';
+import { hasHtmlTags } from '../../utils/validation';
 import styles from './LoginModal.module.css';
 
 export default function LoginModal({ onClose }: LoginModalProps) {
@@ -67,6 +68,10 @@ export default function LoginModal({ onClose }: LoginModalProps) {
         }
         if (name.trim().length > 20) {
           setError('이름은 20자 이하로 입력해주세요.');
+          return;
+        }
+        if (hasHtmlTags(name)) {
+          setError('이름에 HTML 태그는 사용할 수 없습니다.');
           return;
         }
         if (password.length < 6) {
