@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MdCreate } from 'react-icons/md';
 import useAuth from '../hooks/useAuth';
 import usePosts from '../hooks/usePosts';
@@ -11,24 +11,34 @@ import PostForm from '../components/ui/PostForm';
 import SearchBar from '../components/ui/SearchBar';
 import Pagination from '../components/ui/Pagination';
 import { SkeletonList } from '../components/ui/Skeleton';
+import useDebounce from '../hooks/useDebounce';
 import type { Post } from '../types';
 import styles from './Board.module.css';
 
 export default function Board() {
-  const { posts, paged, loading, page, setPage, totalPages, totalPosts, addPost, updatePost, deletePost, incrementViews, addComment } = usePosts('free');
+  const { posts, loading, page, setPage, addPost, updatePost, deletePost, incrementViews, addComment } = usePosts('free');
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 300);
   const { user } = useAuth();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [mode, setMode] = useState<'list' | 'detail' | 'write' | 'edit'>('list');
   const [editPost, setEditPost] = useState<Post | null>(null);
   const { confirm, dialog } = useConfirm();
 
-  const filtered = search
-    ? paged.filter((p) =>
-        p.title.toLowerCase().includes(search.toLowerCase()) ||
-        p.content.toLowerCase().includes(search.toLowerCase())
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, setPage]);
+
+  const filtered = debouncedSearch
+    ? posts.filter((p) =>
+        p.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        p.content.toLowerCase().includes(debouncedSearch.toLowerCase())
       )
-    : paged;
+    : posts;
+
+  const PER_PAGE = 5;
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const pagedList = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const selectedPost = selectedId ? posts.find((p) => p.id === selectedId) : null;
 
@@ -110,14 +120,14 @@ export default function Board() {
           {mode === 'list' && (
             <>
               <div className={styles.toolbar}>
-                <SearchBar value={search} onChange={(v) => { setSearch(v); setPage(1); }} placeholder="제목 또는 내용으로 검색" />
+                <SearchBar value={search} onChange={setSearch} placeholder="제목 또는 내용으로 검색" />
                 {user && (
                   <button className={styles.writeBtn} onClick={() => setMode('write')}>
                     <MdCreate /> 글쓰기
                   </button>
                 )}
               </div>
-              <PostList posts={filtered} onSelect={handleSelect} totalPosts={totalPosts} />
+              <PostList posts={pagedList} onSelect={handleSelect} totalPosts={filtered.length} />
               <Pagination current={page} total={totalPages} onChange={setPage} />
             </>
           )}

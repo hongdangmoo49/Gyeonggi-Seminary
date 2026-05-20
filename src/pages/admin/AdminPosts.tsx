@@ -5,6 +5,7 @@ import { MdSearch, MdDelete, MdVisibility, MdVisibilityOff } from 'react-icons/m
 import { useConfirm } from '../../hooks/useConfirm';
 import { toast } from '../../hooks/useToast';
 import { SkeletonList } from '../../components/ui/Skeleton';
+import useDebounce from '../../hooks/useDebounce';
 import type { BoardKey } from '../../types';
 import styles from './AdminPosts.module.css';
 
@@ -31,6 +32,7 @@ interface PostData {
 export default function AdminPosts() {
   const [posts, setPosts] = useState<PostData[]>([]);
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 300);
   const [boardFilter, setBoardFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const { confirm, dialog } = useConfirm();
@@ -65,9 +67,9 @@ export default function AdminPosts() {
 
   const filtered = posts.filter((p) => {
     const matchBoard = boardFilter === 'all' || p.board === boardFilter;
-    const matchSearch = !search ||
-      p.title?.toLowerCase().includes(search.toLowerCase()) ||
-      p.author?.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = !debouncedSearch ||
+      p.title?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      p.author?.toLowerCase().includes(debouncedSearch.toLowerCase());
     return matchBoard && matchSearch;
   });
 

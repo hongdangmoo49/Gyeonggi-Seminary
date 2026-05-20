@@ -6,6 +6,7 @@ import { MdSearch, MdDelete, MdShield } from 'react-icons/md';
 import { useConfirm } from '../../hooks/useConfirm';
 import { toast } from '../../hooks/useToast';
 import { SkeletonList } from '../../components/ui/Skeleton';
+import useDebounce from '../../hooks/useDebounce';
 import type { Role } from '../../types';
 import styles from './AdminUsers.module.css';
 
@@ -28,6 +29,7 @@ export default function AdminUsers() {
   const { user: me } = useAuth();
   const [users, setUsers] = useState<UserData[]>([]);
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 300);
   const [loading, setLoading] = useState(true);
   const { confirm, dialog } = useConfirm();
 
@@ -62,9 +64,9 @@ export default function AdminUsers() {
   };
 
   const filtered = users.filter((u) =>
-    !search ||
-    u.name?.toLowerCase().includes(search.toLowerCase()) ||
-    u.email?.toLowerCase().includes(search.toLowerCase())
+    !debouncedSearch ||
+    u.name?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+    u.email?.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
 
   if (loading) return <SkeletonList rows={6} />;

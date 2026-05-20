@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ComponentType } from 'react';
 import {
   MdFileDownload,
@@ -9,6 +9,7 @@ import PageBanner from '../components/ui/PageBanner';
 import FilterTabs from '../components/ui/FilterTabs';
 import SearchBar from '../components/ui/SearchBar';
 import Pagination from '../components/ui/Pagination';
+import useDebounce from '../hooks/useDebounce';
 import documents from '../data/documents';
 import styles from './DocumentLibrary.module.css';
 
@@ -23,11 +24,16 @@ const FILE_ICONS: Record<string, ComponentType<{ className?: string }>> = {
 export default function DocumentLibrary() {
   const [category, setCategory] = useState('전체');
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 300);
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, category]);
 
   const filtered = documents.filter((d) => {
     const matchCat = category === '전체' || d.category === category;
-    const matchSearch = !search || d.title.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = !debouncedSearch || d.title.toLowerCase().includes(debouncedSearch.toLowerCase());
     return matchCat && matchSearch;
   });
 
@@ -39,8 +45,8 @@ export default function DocumentLibrary() {
       <PageBanner title="일반자료실" subtitle="강의자료, 서식, 학술 자료" en="Document Library" />
       <section className="section">
         <div className="container">
-          <SearchBar value={search} onChange={(v) => { setSearch(v); setPage(1); }} placeholder="자료명으로 검색" />
-          <FilterTabs categories={CATEGORIES} active={category} onChange={(c) => { setCategory(c); setPage(1); }} />
+          <SearchBar value={search} onChange={setSearch} placeholder="자료명으로 검색" />
+          <FilterTabs categories={CATEGORIES} active={category} onChange={setCategory} />
 
           <div className={styles.grid}>
             {paged.map((doc) => {
