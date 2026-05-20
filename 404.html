@@ -4,13 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>경기신학교 | Gyeonggi Seminary</title>
-    <script>
-      // SPA redirect: GitHub Pages에서 직접 URL 접근 시 index.html로 리다이렉트
-      var path = window.location.pathname.replace('/Gyeonggi-Seminary', '');
-      if (path === '/' || path === '') {
-        path = '';
-      }
-      window.location.replace('/Gyeonggi-Seminary/' + (path ? '#' + path : ''));
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + l.pathname.slice(1).indexOf('/')).join('/') +
+        '/?p=' + l.pathname.slice(1).split('/').slice(1).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
     </script>
   </head>
   <body>
